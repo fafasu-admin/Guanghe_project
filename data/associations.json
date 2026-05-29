@@ -12,7 +12,7 @@
     "color": "#7f8cff",
     "softColor": "#b8bdff",
     "keywords": ["理性", "严谨", "体系化"],
-    "cardImage": "assets/cards/logic.svg",
+    "cardImage": "assets/cards/logic.jpg",
     "declaration": "你相信万物皆有深层结构。纷乱系统终将被梳理，代码和规则是世界稳定运转的骨架。",
     "portrait": "硬核攻略、配置研究、机制挖掘、数据分析，「为什么能跑」型玩家。",
     "communityUrl": "https://example.com/guanghe/logic"
@@ -30,7 +30,7 @@
     "color": "#62d7c4",
     "softColor": "#b7fff1",
     "keywords": ["审美", "直觉", "氛围感"],
-    "cardImage": "assets/cards/sense.svg",
+    "cardImage": "assets/cards/sense.jpg",
     "declaration": "你听见色彩流动，也看见声波成形。世界首先要被看见、被听见，然后才会被记住。",
     "portrait": "同人创作、截图鉴赏、视觉分享、美学追求，「太美了」型玩家。",
     "communityUrl": "https://example.com/guanghe/sense"
@@ -48,7 +48,7 @@
     "color": "#f0bf62",
     "softColor": "#ffe4a8",
     "keywords": ["共情", "记忆", "宿命感"],
-    "cardImage": "assets/cards/soul.svg",
+    "cardImage": "assets/cards/soul.jpg",
     "declaration": "你在断裂的碑文间听见旧日回声。低语仍在回响，故事即存在。",
     "portrait": "角色分析、世界观考据、剧情沉浸、情感共鸣，「然后呢」型玩家。",
     "communityUrl": "https://example.com/guanghe/soul"
@@ -66,7 +66,7 @@
     "color": "#ff9e8d",
     "softColor": "#ffd2ca",
     "keywords": ["平衡", "心流", "可玩性"],
-    "cardImage": "assets/cards/rules.svg",
+    "cardImage": "assets/cards/rules.jpg",
     "declaration": "你凝视博弈方桌上的每一枚筹码。规则刻痕尚未磨灭，机制即法则。",
     "portrait": "机制测评、平衡讨论、关卡设计、系统理解，「为什么不这样」型玩家。",
     "communityUrl": "https://example.com/guanghe/rules"

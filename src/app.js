@@ -243,7 +243,7 @@ function renderResult(result) {
   elements.identityCard.style.setProperty("--accent", primary.color);
   elements.identityCard.style.setProperty("--accent-soft", primary.softColor);
   elements.resultCardImage.src = primary.cardImage;
-  elements.resultCardImage.alt = `${primary.name}卡面占位图`;
+  elements.resultCardImage.alt = `${primary.name}卡面`;
   elements.resultCrest.textContent = primary.crest;
   elements.resultEnglishName.textContent = primary.englishName;
   elements.resultChineseName.textContent = primary.name;

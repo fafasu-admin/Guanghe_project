@@ -1,15 +1,15 @@
 [
   {
     "id": "q1",
-    "weight": 1.5,
+    "weight": 1.3,
     "type": "core",
     "title": "踏入废墟，四座殿堂浮现",
-    "lore": "你穿过碎石与尘埃，四座古老殿堂在眼前浮现。哪一座最先吸引你？",
+    "lore": "你走进了一所废弃的神殿，地上散落着四种圣物，你捡起了：",
     "options": [
-      { "association": "logic", "text": "齿轮塔：精密运转的结构低声咬合，仿佛代码即命运。" },
-      { "association": "sense", "text": "幻色长廊：色彩与声光永不消逝，像素正在呼吸。" },
-      { "association": "soul", "text": "回声殿堂：低语与叙事仍在回响，故事即存在。" },
-      { "association": "rules", "text": "博弈方桌：规则刻痕尚未磨灭，机制即法则。" }
+      { "association": "logic", "text": "一卷边缘破损的诗集，写有上个文明纪元的经典之作。" },
+      { "association": "sense", "text": "一支映射日光的画笔，能够绘出千种色彩。" },
+      { "association": "soul", "text": "一个宝石质感的键帽，能够使机械运转流畅。" },
+      { "association": "rules", "text": "一枚有裂痕的天平砝码，能够维持能量的均衡流转。" }
     ]
   },
   {
@@ -17,77 +17,77 @@
     "weight": 1,
     "type": "behavior",
     "title": "造物主的残影给你一个任务",
-    "lore": "残影将一枚破碎星核交到你手中：若要修复世界，你会先补上哪一环？",
+    "lore": "凝望神殿周围的废墟，你注意到",
     "options": [
-      { "association": "logic", "text": "修复核心结构，让世界重新稳定运转。" },
-      { "association": "sense", "text": "描绘殿堂壁画，让光与声音重新回到废墟。" },
-      { "association": "soul", "text": "解读残缺史页，让被遗忘的人重新拥有名字。" },
-      { "association": "rules", "text": "重塑规则，让旅人知道如何行动、如何选择。" }
+      { "association": "logic", "text": "断壁残垣上模糊的字迹，记录了神明的陨落。" },
+      { "association": "sense", "text": "地上的碎玻璃像被打翻的星星，神殿中奏响哀歌。" },
+      { "association": "soul", "text": "远处一座桥梁即将坍塌，只有一根石柱仍能承重。" },
+      { "association": "rules", "text": "神殿前的广场伫立着一座天秤雕塑，彰显公正的夙愿。" }
     ]
   },
   {
     "id": "q3",
-    "weight": 0.6,
+    "weight": 1.4,
     "type": "social",
     "title": "废墟中遇到一群旅人",
-    "lore": "他们争论着该如何继续前行。你最自然的反应是什么？",
+    "lore": "深入神殿广场，四种服饰统一的人群正在召开议会，你会被哪些人吸引：",
     "options": [
-      { "association": "logic", "text": "交换攻略，先把路线、资源和风险拆清楚。" },
-      { "association": "sense", "text": "分享画作与见闻，让大家重新看见废墟的美。" },
-      { "association": "soul", "text": "讲述故事，用一段传说让众人理解为何而行。" },
-      { "association": "rules", "text": "设计新玩法，把分歧变成一场可参与的试炼。" }
+      { "association": "logic", "text": "手握羽毛笔、侃侃而谈的浪漫诗人。" },
+      { "association": "sense", "text": "衣着华丽考究、捕捉绮丽色彩的艺术家。" },
+      { "association": "soul", "text": "批评现有规则、调试广场设施的理性科学家。" },
+      { "association": "rules", "text": "频频拨动算珠、洞悉棋局走向的冷静弈者。" }
     ]
   },
   {
     "id": "q4",
-    "weight": 1,
+    "weight": 1.5,
     "type": "behavior",
     "title": "如何向他人描述废墟之美",
-    "lore": "有人问你：这片废墟为什么值得被复原？你会怎样回答？",
+    "lore": "人们窃窃私语，猜测废墟下的过往，你最不愿相信的是：",
     "options": [
-      { "association": "logic", "text": "解析底层逻辑：它的结构一旦复原，万物都会重新运转。" },
-      { "association": "sense", "text": "展示视觉奇观：流光、纹章与钟声本身就足以令人停留。" },
-      { "association": "soul", "text": "讲述远古故事：这里埋着许多人没有说完的愿望。" },
-      { "association": "rules", "text": "分析规则体系：它真正迷人的地方，是每个选择都会改变局势。" }
+      { "association": "logic", "text": "神明心性大变，民众的誓言沦为虚无。" },
+      { "association": "sense", "text": "世界的色彩褪为灰白，连风声都变得单调。" },
+      { "association": "soul", "text": "时间的齿轮卡顿，万物的运转走走停停。" },
+      { "association": "rules", "text": "天秤的支点断裂，国度的付出与收获沦为荒诞的玩笑。" }
     ]
   },
   {
     "id": "q5",
-    "weight": 1.5,
+    "weight": 1.1,
     "type": "core",
     "title": "深夜废墟传来三种声音",
-    "lore": "午夜过后，废墟深处传来奇异回响。哪一种声音最先抓住你？",
+    "lore": "议会使者邀请你发言，鼓舞人们参与世界重建工作，你选择：",
     "options": [
-      { "association": "logic", "text": "机械运转声：齿轮仍在校准，系统等待重启。" },
-      { "association": "sense", "text": "色彩流淌声：光像河水一样漫过墙面。" },
-      { "association": "soul", "text": "远处低语声：有人在呼唤一个早已失落的名字。" },
-      { "association": "rules", "text": "骰子落桌声：新的局面已经开始计算。" }
+      { "association": "logic", "text": "讲述一个精彩的故事，晓之以理、动之以情。" },
+      { "association": "sense", "text": "绘制一幅美好治愈的画卷，弹奏一支激昂的乐曲。" },
+      { "association": "soul", "text": "设计一场精密的实验，陈述重建世界的方法。" },
+      { "association": "rules", "text": "用一张数据齐全的思维导图，解释成功后的利益分配。" }
     ]
   },
   {
     "id": "q6",
-    "weight": 0.6,
+    "weight": 1.2,
     "type": "social",
     "title": "你从废墟中发现一件遗物",
-    "lore": "尘土之下，一件遗物仍微微发光。你最看重它的什么？",
+    "lore": "你加入了世界重建行动，你会优先处理哪项事务：",
     "options": [
-      { "association": "logic", "text": "精密齿轮：它能证明古代系统如何运转。" },
-      { "association": "sense", "text": "斑斓棱镜：它折射出的色彩值得被所有人看见。" },
-      { "association": "soul", "text": "古老手记：它也许藏着前人最后的心愿。" },
-      { "association": "rules", "text": "刻痕骰子：每一道划痕都像一条未完成的规则。" }
+      { "association": "logic", "text": "整理残存的文献资料，明晰世界的真实处境。" },
+      { "association": "sense", "text": "修缮荒芜的街道，清理不和谐的声音。" },
+      { "association": "soul", "text": "确定并执行一版高效的行动准则。" },
+      { "association": "rules", "text": "重新统计现有资源，均衡分配给各部门。" }
     ]
   },
   {
     "id": "q7",
-    "weight": 1.5,
+    "weight": 0.9,
     "type": "core",
     "title": "废墟意志追问：你为何留下？",
-    "lore": "穿过最后一道门时，废墟本身向你发问：你为什么要留在这里？",
+    "lore": "你认为哪种现象，预示着世界重建有了新的进展：",
     "options": [
-      { "association": "logic", "text": "为了理解万物运转，找回世界隐藏的秩序。" },
-      { "association": "sense", "text": "为了创造美，让灰烬重新拥有光与声音。" },
-      { "association": "soul", "text": "为了守护故事，让沉默的人被再次听见。" },
-      { "association": "rules", "text": "为了重塑秩序，让每一次选择都值得被认真对待。" }
+      { "association": "logic", "text": "神殿边的湖泊浮出金色的神谕。" },
+      { "association": "sense", "text": "神殿前的花朵绽放出七彩的花瓣。" },
+      { "association": "soul", "text": "昼夜更替的法则趋于正常运转。" },
+      { "association": "rules", "text": "民众的耕耘小有收获，但依然难有留存。" }
     ]
   }
 ]
