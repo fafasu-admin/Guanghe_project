@@ -1,5 +1,7 @@
 import { EVENT_TYPES, reportEvent } from "./api/report.js";
 
+const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
+
 const state = {
   associations: {},
   questions: [],
@@ -23,25 +25,33 @@ const elements = {
   questionCount: document.querySelector("#question-count"),
   progressBar: document.querySelector("#progress-bar"),
   optionGrid: document.querySelector("#option-grid"),
-  resultTitle: document.querySelector("#result-title"),
+  resultArchive: document.querySelector("#result-archive"),
+  resultStatus: document.querySelector("#result-status"),
+  identityCard: document.querySelector("#identity-card"),
+  resultCrest: document.querySelector("#result-crest"),
+  cardHint: document.querySelector("#card-hint"),
+  resultDetails: document.querySelector("#result-details"),
   resultEnglishName: document.querySelector("#result-english-name"),
   resultChineseName: document.querySelector("#result-chinese-name"),
-  frontEnglishName: document.querySelector("#front-english-name"),
-  frontChineseName: document.querySelector("#front-chinese-name"),
-  resultSubtitle: document.querySelector("#result-subtitle"),
+  resultPersonaTitle: document.querySelector("#result-persona-title"),
   resultDeclaration: document.querySelector("#result-declaration"),
   resultPortrait: document.querySelector("#result-portrait"),
-  resultCrest: document.querySelector("#result-crest"),
   resultCardImage: document.querySelector("#result-card-image"),
+  resultPrimaryStat: document.querySelector("#result-primary-stat"),
+  resultSecondaryStat: document.querySelector("#result-secondary-stat"),
+  primaryStatIcon: document.querySelector("#primary-stat-icon"),
+  secondaryStatIcon: document.querySelector("#secondary-stat-icon"),
   keywordRow: document.querySelector("#keyword-row"),
   distribution: document.querySelector("#distribution"),
-  identityCard: document.querySelector("#identity-card"),
-  resultCopy: document.querySelector("#result-copy"),
-  cardHint: document.querySelector("#card-hint"),
+  communityLink: document.querySelector("#community-link"),
+  communityLinkText: document.querySelector("#community-link-text"),
   restartButton: document.querySelector("#restart-button"),
   shareButton: document.querySelector("#share-button"),
-  communityLink: document.querySelector("#community-link")
+  resultStats: document.querySelector(".result-stats")
 };
+
+const STAT_FONT_MAX = 12;
+const STAT_FONT_MIN = 9;
 
 init();
 
@@ -55,8 +65,53 @@ async function init() {
   state.questions = questions;
   resetScores();
   bindEvents();
+  window.addEventListener("resize", scheduleFitResultStats);
   reportEvent(EVENT_TYPES.H5_ENTER, { page: "h5-1" });
   maybeRenderDemo();
+}
+
+function getStatShortName(association) {
+  return association.statShortName || association.shortName;
+}
+
+function fitResultStats() {
+  if (!elements.resultStats) {
+    return;
+  }
+
+  elements.resultStats.querySelectorAll(".result-stat").forEach((row) => {
+    const icon = row.querySelector(".result-stat-icon");
+    const text = row.querySelector(".result-stat-text");
+
+    if (!text) {
+      return;
+    }
+
+    text.style.fontSize = "";
+    text.style.maxWidth = "";
+
+    if (icon?.hidden) {
+      return;
+    }
+
+    const gap = 4;
+    const maxWidth = Math.max(row.clientWidth - (icon?.offsetWidth || 0) - gap, 0);
+    let size = STAT_FONT_MAX;
+
+    text.style.maxWidth = `${maxWidth}px`;
+    text.style.fontSize = `${size}px`;
+
+    while (text.scrollWidth > maxWidth && size > STAT_FONT_MIN) {
+      size -= 0.5;
+      text.style.fontSize = `${size}px`;
+    }
+  });
+}
+
+function scheduleFitResultStats() {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(fitResultStats);
+  });
 }
 
 async function fetchJson(path) {
@@ -86,14 +141,13 @@ function startTest() {
   state.currentIndex = 0;
   state.answers = [];
   state.latestResult = null;
+  resetResultPresentation();
   reportEvent(EVENT_TYPES.TEST_START);
   showView("quiz");
   renderQuestion();
 }
 
 function restartTest() {
-  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
-  elements.resultCopy.classList.remove("is-visible");
   startTest();
 }
 
@@ -121,13 +175,19 @@ function maybeRenderDemo() {
   state.latestResult = result;
   renderResult(result);
   showView("result");
-
   window.requestAnimationFrame(() => {
+    elements.resultArchive.classList.add("is-visible");
     elements.identityCard.classList.add("is-summoned");
     if (params.get("flipped") === "1") {
       flipCard();
     }
   });
+}
+
+function resetResultPresentation() {
+  elements.resultArchive.classList.remove("is-visible");
+  elements.resultDetails.classList.remove("is-details-visible");
+  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
 }
 
 function showView(name) {
@@ -196,12 +256,14 @@ function revealResult() {
     percentages: result.percentages
   });
 
+  resetResultPresentation();
   showView("resonance");
 
   window.setTimeout(() => {
     renderResult(result);
     showView("result");
     window.requestAnimationFrame(() => {
+      elements.resultArchive.classList.add("is-visible");
       elements.identityCard.classList.add("is-summoned");
     });
   }, 1300);
@@ -223,6 +285,7 @@ function buildResult() {
   return {
     primary,
     secondary,
+    ranked,
     percentages: ranked.reduce((map, item) => {
       map[item.key] = item.percentage;
       return map;
@@ -232,34 +295,49 @@ function buildResult() {
 
 function renderResult(result) {
   const primary = state.associations[result.primary.key];
-  const secondary = result.secondary ? state.associations[result.secondary.key] : null;
+  const potential = result.secondary || result.ranked[1];
+  const potentialAssociation = potential ? state.associations[potential.key] : null;
   const primaryPercent = result.percentages[result.primary.key];
-  const secondaryText = secondary
-    ? ` / 共鸣副脉：${secondary.shortName} ${result.percentages[result.secondary.key]}%`
-    : "";
+
+  document.documentElement.style.setProperty("--accent", primary.color);
+  document.documentElement.style.setProperty("--accent-soft", primary.softColor);
 
   elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
-  elements.resultCopy.classList.remove("is-visible");
+  elements.resultDetails.classList.remove("is-details-visible");
   elements.identityCard.style.setProperty("--accent", primary.color);
   elements.identityCard.style.setProperty("--accent-soft", primary.softColor);
-  elements.resultCardImage.src = primary.cardImage;
-  elements.resultCardImage.alt = `${primary.name}卡面`;
   elements.resultCrest.textContent = primary.crest;
-  elements.resultEnglishName.textContent = primary.englishName;
+  elements.cardHint.textContent = "点击卡牌，翻开你的共鸣身份。";
+  elements.resultStatus.textContent = "卡牌边缘的微光已经回应你。";
+
+  elements.resultCardImage.src = primary.cardImage;
+  elements.resultCardImage.alt = `${primary.personaTitle}卡面`;
+  elements.resultEnglishName.textContent = primary.archiveName || primary.englishName;
   elements.resultChineseName.textContent = primary.name;
-  elements.frontEnglishName.textContent = primary.englishName;
-  elements.frontChineseName.textContent = primary.name;
-  elements.resultSubtitle.textContent = `主归属：${primary.shortName} ${primaryPercent}%${secondaryText}`;
+  elements.resultPersonaTitle.textContent = primary.personaTitle;
   elements.resultDeclaration.textContent = primary.declaration;
   elements.resultPortrait.textContent = primary.portrait;
+  elements.resultPrimaryStat.textContent = `${getStatShortName(primary)} ${primaryPercent}%`;
+  elements.primaryStatIcon.src = primary.spectrumIcon;
   elements.communityLink.href = primary.communityUrl;
-  elements.cardHint.textContent = "点击卡牌，翻开你的共鸣身份。";
+
+  if (potentialAssociation) {
+    elements.resultSecondaryStat.textContent = `${getStatShortName(potentialAssociation)} ${result.percentages[potential.key]}%`;
+    elements.secondaryStatIcon.src = potentialAssociation.spectrumIcon;
+    elements.secondaryStatIcon.hidden = false;
+  } else {
+    elements.resultSecondaryStat.textContent = "—";
+    elements.secondaryStatIcon.hidden = true;
+  }
+
+  elements.communityLinkText.textContent = `进入${primary.shortName}协会，找到你的同伴 >`;
 
   elements.keywordRow.innerHTML = primary.keywords
-    .map((keyword) => `<span>${keyword}</span>`)
+    .map((keyword) => `<span class="result-keyword">${keyword}</span>`)
     .join("");
 
-  renderDistribution(result.percentages);
+  renderDistribution(result);
+  scheduleFitResultStats();
 }
 
 function flipCard() {
@@ -277,10 +355,12 @@ function flipCard() {
   window.setTimeout(() => {
     elements.identityCard.classList.remove("is-shaking");
     elements.identityCard.classList.add("is-flipped", "is-flash");
-    elements.cardHint.textContent = "协会低语已显现。你的共鸣身份正在被记录。";
+    elements.resultStatus.textContent = "协会低语已显现。";
+    elements.cardHint.textContent = "";
 
     window.setTimeout(() => {
-      elements.resultCopy.classList.add("is-visible");
+      elements.resultDetails.classList.add("is-details-visible");
+      scheduleFitResultStats();
     }, 560);
 
     window.setTimeout(() => {
@@ -289,30 +369,42 @@ function flipCard() {
   }, 1000);
 }
 
-function renderDistribution(percentages) {
-  const entries = Object.entries(state.associations);
-  elements.distribution.innerHTML = entries
-    .map(([key, association]) => {
-      const percent = percentages[key] || 0;
-      return `
-        <div class="distribution-row">
-          <div class="distribution-label">
+function renderDistribution(result) {
+  const primaryKey = result.primary.key;
+
+  elements.distribution.innerHTML = SPECTRUM_ORDER.map((key) => {
+    const association = state.associations[key];
+    const percent = result.percentages[key] || 0;
+    const isDominant = key === primaryKey;
+
+    const fillStyle = isDominant
+      ? `flex: 0 0 ${percent}%; width: ${percent}%;`
+      : `width: ${percent}%; --accent: ${association.color};`;
+
+    return `
+      <div class="spectrum-row${isDominant ? " is-dominant" : ""}">
+        <span class="spectrum-icon-wrap">
+          <img class="spectrum-icon" src="${association.spectrumIcon}" alt="" aria-hidden="true">
+        </span>
+        <div class="spectrum-body">
+          <div class="spectrum-head">
             <span>${association.shortName}</span>
             <strong>${percent}%</strong>
           </div>
-          <div class="distribution-track">
-            <span style="width: ${percent}%; --accent: ${association.color}"></span>
+          <div class="spectrum-track">
+            <span class="spectrum-fill${isDominant ? " is-dominant" : ""}" style="${fillStyle}"></span>
+            ${isDominant ? '<span class="spectrum-extend" aria-hidden="true"></span>' : ""}
           </div>
         </div>
-      `;
-    })
-    .join("");
+      </div>
+    `;
+  }).join("");
 }
 
 async function shareResult() {
   const result = state.latestResult || buildResult();
   const primary = state.associations[result.primary.key];
-  const text = `废墟的低语告诉我：我的灵魂属于「${primary.name}」。`;
+  const text = `废墟的低语告诉我：我被记录为「${primary.personaTitle}」，灵魂属于「${primary.name}」。`;
 
   reportEvent(EVENT_TYPES.RESULT_SHARED, {
     primaryAssociation: result.primary.key,
@@ -329,9 +421,9 @@ async function shareResult() {
   }
 
   await navigator.clipboard?.writeText(`${text} ${window.location.href}`);
-  elements.shareButton.textContent = "已复制分享文案";
+  elements.shareButton.setAttribute("aria-label", "已复制分享文案");
   window.setTimeout(() => {
-    elements.shareButton.textContent = "分享共鸣身份";
+    elements.shareButton.setAttribute("aria-label", "分享共鸣身份");
   }, 1800);
 }
 

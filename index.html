@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>共鸣者档案 | 游戏创造者议会</title>
     <meta name="description" content="踏入造物主之墟，找到你的共鸣协会。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body data-page="test">
@@ -62,44 +65,87 @@
         </div>
       </section>
 
-      <section class="result view" id="result-view" aria-labelledby="result-title">
-        <div class="summon-stage">
-          <p class="eyebrow">共鸣者协会身份卡</p>
-          <button class="fantasy-card" id="identity-card" type="button" aria-label="点击翻开共鸣身份卡">
-            <span class="card-aura" aria-hidden="true"></span>
-            <span class="card-inner">
-              <span class="card-side card-back">
-                <span class="back-sigil">✦</span>
-                <span class="back-title">共鸣之章</span>
-                <span class="back-line">触碰卡牌，揭示协会归属</span>
-              </span>
-              <span class="card-side card-front">
-                <img id="result-card-image" src="" alt="">
-                <span class="front-crest" id="result-crest" aria-hidden="true">◇</span>
-                <span class="front-nameplate">
-                  <strong id="front-english-name"></strong>
-                  <em id="front-chinese-name"></em>
+      <section class="result view" id="result-view" aria-labelledby="result-chinese-name">
+        <div class="result-archive" id="result-archive">
+          <header class="result-archive-header">
+            <p class="result-archive-kicker">
+              <span class="result-section-mark" aria-hidden="true"><span></span></span>
+              <span class="result-archive-kicker__text">共鸣者档案 | 游戏创造者议会</span>
+              <span class="result-section-mark" aria-hidden="true"><span></span></span>
+            </p>
+            <p class="result-status" id="result-status">卡牌边缘的微光已经回应你。</p>
+          </header>
+
+          <div class="result-card-stage">
+            <button class="fantasy-card" id="identity-card" type="button" aria-label="点击翻开共鸣身份卡">
+              <span class="card-aura" aria-hidden="true"></span>
+              <span class="card-inner">
+                <span class="card-side card-back">
+                  <span class="back-sigil" id="result-crest" aria-hidden="true">✦</span>
+                  <span class="back-title">共鸣之章</span>
+                  <span class="back-line">触碰卡牌，揭示协会归属</span>
+                </span>
+                <span class="card-side card-front">
+                  <img id="result-card-image" src="" alt="">
                 </span>
               </span>
-            </span>
-          </button>
-          <p class="card-hint" id="card-hint">卡牌边缘的微光已经回应你。点击卡牌，翻开你的共鸣身份。</p>
+            </button>
+            <p class="card-hint" id="card-hint">点击卡牌，翻开你的共鸣身份。</p>
+          </div>
 
-          <div class="result-copy" id="result-copy">
-            <h2 class="bilingual-title" id="result-title">
-              <span class="english-name" id="result-english-name"></span>
-              <span class="chinese-name" id="result-chinese-name"></span>
-            </h2>
-            <p class="subtitle" id="result-subtitle"></p>
-            <p class="declaration" id="result-declaration"></p>
-            <div class="keyword-row" id="keyword-row"></div>
-            <p class="portrait" id="result-portrait"></p>
-            <div class="distribution" id="distribution"></div>
-            <div class="action-row">
-              <button class="ghost-action" type="button" id="restart-button">重新试炼</button>
-              <button class="primary-action compact" type="button" id="share-button">分享共鸣身份</button>
+          <div class="result-details" id="result-details">
+          <div class="result-identity">
+            <p class="result-english" id="result-english-name"></p>
+            <div class="result-title-row">
+              <span class="result-wing result-wing--left" aria-hidden="true"></span>
+              <h2 class="result-chinese" id="result-chinese-name"></h2>
+              <span class="result-wing result-wing--right" aria-hidden="true"></span>
             </div>
-            <a class="community-link" id="community-link" href="world.html">前往光核，找到你的协会同伴</a>
+            <div class="result-identity-divider" aria-hidden="true"><span></span></div>
+            <p class="result-recorded">你被记录为：<span id="result-persona-title"></span></p>
+          </div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <img class="result-stat-icon" id="primary-stat-icon" src="" alt="" aria-hidden="true">
+              <p class="result-stat-text">
+                <span class="result-stat-label">主导共鸣：</span>
+                <span id="result-primary-stat"></span>
+              </p>
+            </div>
+            <div class="result-stat-divider" aria-hidden="true"></div>
+            <div class="result-stat">
+              <img class="result-stat-icon" id="secondary-stat-icon" src="" alt="" aria-hidden="true">
+              <p class="result-stat-text">
+                <span class="result-stat-label">潜在共鸣：</span>
+                <span id="result-secondary-stat"></span>
+              </p>
+            </div>
+          </div>
+
+          <p class="result-declaration" id="result-declaration"></p>
+          <div class="result-keywords" id="keyword-row"></div>
+          <p class="result-portrait" id="result-portrait"></p>
+
+          <section class="result-spectrum" aria-labelledby="spectrum-title">
+            <h3 class="result-spectrum-title" id="spectrum-title">你的共鸣光谱</h3>
+            <div class="spectrum-list" id="distribution"></div>
+            <p class="result-spectrum-note">数值代表不同创造者倾向的共鸣强度，不代表能力高低。</p>
+          </section>
+
+          <div class="result-actions">
+            <button class="result-image-button" type="button" id="restart-button" aria-label="重新试炼">
+              <img src="assets/cards/重新试炼.png" alt="">
+            </button>
+            <button class="result-image-button" type="button" id="share-button" aria-label="分享共鸣身份">
+              <img src="assets/cards/分享共鸣身份.png" alt="">
+            </button>
+          </div>
+
+          <a class="result-cta" id="community-link" href="world.html">
+            <img src="assets/cards/跳转社区.png" alt="">
+            <span id="community-link-text">进入协会，找到你的同伴</span>
+          </a>
           </div>
         </div>
       </section>
