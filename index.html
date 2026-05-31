@@ -15,9 +15,6 @@
       <span class="moon"></span>
       <span class="ruin-arch"></span>
       <span class="rune-ring"></span>
-      <span class="star star-a"></span>
-      <span class="star star-b"></span>
-      <span class="star star-c"></span>
       <span class="mist mist-a"></span>
       <span class="mist mist-b"></span>
     </div>
@@ -67,33 +64,34 @@
 
       <section class="result view" id="result-view" aria-labelledby="result-chinese-name">
         <div class="result-archive" id="result-archive">
-          <header class="result-archive-header">
-            <p class="result-archive-kicker">
-              <span class="result-section-mark" aria-hidden="true"><span></span></span>
-              <span class="result-archive-kicker__text">共鸣者档案 | 游戏创造者议会</span>
-              <span class="result-section-mark" aria-hidden="true"><span></span></span>
-            </p>
-            <p class="result-status" id="result-status">卡牌边缘的微光已经回应你。</p>
-          </header>
+          <div class="share-capture" id="share-capture">
+            <header class="result-archive-header">
+              <p class="result-archive-kicker">
+                <span class="result-section-mark" aria-hidden="true"><span></span></span>
+                <span class="result-archive-kicker__text">共鸣者档案 | 游戏创造者议会</span>
+                <span class="result-section-mark" aria-hidden="true"><span></span></span>
+              </p>
+              <p class="result-status" id="result-status">卡牌边缘的微光已经回应你。</p>
+            </header>
 
-          <div class="result-card-stage">
-            <button class="fantasy-card" id="identity-card" type="button" aria-label="点击翻开共鸣身份卡">
-              <span class="card-aura" aria-hidden="true"></span>
-              <span class="card-inner">
-                <span class="card-side card-back">
-                  <span class="back-sigil" id="result-crest" aria-hidden="true">✦</span>
-                  <span class="back-title">共鸣之章</span>
-                  <span class="back-line">触碰卡牌，揭示协会归属</span>
+            <div class="result-card-stage">
+              <button class="fantasy-card" id="identity-card" type="button" aria-label="点击翻开共鸣身份卡">
+                <span class="card-aura" aria-hidden="true"></span>
+                <span class="card-inner">
+                  <span class="card-side card-back">
+                    <span class="back-sigil" id="result-crest" aria-hidden="true">✦</span>
+                    <span class="back-title">共鸣之章</span>
+                    <span class="back-line">触碰卡牌，揭示协会归属</span>
+                  </span>
+                  <span class="card-side card-front">
+                    <img id="result-card-image" src="" alt="">
+                  </span>
                 </span>
-                <span class="card-side card-front">
-                  <img id="result-card-image" src="" alt="">
-                </span>
-              </span>
-            </button>
-            <p class="card-hint" id="card-hint">点击卡牌，翻开你的共鸣身份。</p>
-          </div>
+              </button>
+              <p class="card-hint" id="card-hint">点击卡牌，翻开你的共鸣身份。</p>
+            </div>
 
-          <div class="result-details" id="result-details">
+            <div class="result-details" id="result-details">
           <div class="result-identity">
             <p class="result-english" id="result-english-name"></p>
             <div class="result-title-row">
@@ -132,24 +130,44 @@
             <div class="spectrum-list" id="distribution"></div>
             <p class="result-spectrum-note">数值代表不同创造者倾向的共鸣强度，不代表能力高低。</p>
           </section>
-
-          <div class="result-actions">
-            <button class="result-image-button" type="button" id="restart-button" aria-label="重新试炼">
-              <img src="assets/cards/重新试炼.png" alt="">
-            </button>
-            <button class="result-image-button" type="button" id="share-button" aria-label="分享共鸣身份">
-              <img src="assets/cards/分享共鸣身份.png" alt="">
-            </button>
+            </div>
           </div>
 
-          <a class="result-cta" id="community-link" href="world.html">
-            <img src="assets/cards/跳转社区.png" alt="">
-            <span id="community-link-text">进入协会，找到你的同伴</span>
-          </a>
+          <div class="result-bottom" id="result-bottom">
+            <div class="result-actions">
+              <button class="result-image-button" type="button" id="restart-button" aria-label="重新试炼">
+                <img src="assets/cards/重新试炼.png" alt="">
+              </button>
+              <button class="result-image-button" type="button" id="share-button" aria-label="分享共鸣身份">
+                <img src="assets/cards/分享共鸣身份.png" alt="">
+              </button>
+            </div>
+
+            <a class="result-cta" id="community-link" href="world.html">
+              <img src="assets/cards/跳转社区.png" alt="">
+              <span id="community-link-text">进入协会，找到你的同伴</span>
+            </a>
+            <a class="result-tree-link" href="tree.html">点击前往共鸣树查看点亮进度</a>
           </div>
         </div>
       </section>
     </main>
+
+    <div class="share-modal" id="share-modal" hidden aria-hidden="true">
+      <div class="share-modal__backdrop" data-share-close></div>
+      <div class="share-modal__panel" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <button class="share-modal__close" type="button" id="share-modal-close" aria-label="关闭分享">×</button>
+        <h2 class="share-modal__title" id="share-modal-title">分享你的共鸣身份</h2>
+        <div class="share-modal__preview">
+          <img id="share-preview-image" alt="共鸣者身份卡分享图">
+        </div>
+        <div class="share-modal__actions">
+          <button class="share-modal__button" type="button" id="share-save-button">保存图片</button>
+          <button class="share-modal__button" type="button" id="share-copy-link-button">复制链接</button>
+        </div>
+        <p class="share-modal__hint" id="share-modal-hint" aria-live="polite"></p>
+      </div>
+    </div>
 
     <script type="module" src="src/app.js"></script>
   </body>

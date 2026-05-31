@@ -130,39 +130,10 @@ button {
   filter: blur(0.3px);
 }
 
-.star,
 .mist {
   position: absolute;
   display: block;
   border-radius: 999px;
-}
-
-.star {
-  width: 0.28rem;
-  height: 0.28rem;
-  background: #fff;
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.8);
-  animation: twinkle 3.8s ease-in-out infinite;
-}
-
-.star-a {
-  left: 18%;
-  top: 16%;
-}
-
-.star-b {
-  right: 21%;
-  top: 13%;
-  animation-delay: 0.9s;
-}
-
-.star-c {
-  right: 34%;
-  bottom: 21%;
-  animation-delay: 1.6s;
-}
-
-.mist {
   width: 26rem;
   height: 26rem;
   filter: blur(42px);
@@ -628,6 +599,153 @@ h1 {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+.result-bottom {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 460ms ease, transform 460ms ease;
+  pointer-events: none;
+}
+
+.result-bottom.is-details-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.result-bottom .result-actions,
+.result-bottom .result-actions * {
+  pointer-events: auto;
+}
+
+.share-capture {
+  width: 100%;
+}
+
+body.share-modal-open {
+  overflow: hidden;
+}
+
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 20px 16px;
+}
+
+.share-modal[hidden] {
+  display: none;
+}
+
+.share-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 3, 12, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.share-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  padding: 18px 16px 20px;
+  border: 1px solid rgba(240, 191, 98, 0.34);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(240, 191, 98, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(28, 24, 54, 0.98), rgba(10, 8, 23, 0.98));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.share-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(240, 191, 98, 0.28);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(240, 191, 98, 0.92);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.share-modal__title {
+  margin: 0 0 14px;
+  text-align: center;
+  color: rgba(240, 191, 98, 0.92);
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.share-modal__preview {
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid rgba(240, 191, 98, 0.22);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.share-modal__preview img {
+  display: block;
+  width: 100%;
+  max-height: min(62vh, 520px);
+  height: auto;
+  object-fit: contain;
+  -webkit-touch-callout: default;
+  user-select: auto;
+}
+
+.share-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.share-modal__button {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid rgba(240, 191, 98, 0.42);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, 0.12), rgba(240, 191, 98, 0.06)),
+    rgba(255, 255, 255, 0.03);
+  color: rgba(255, 244, 220, 0.96);
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.share-modal__button:hover,
+.share-modal__button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(240, 191, 98, 0.72);
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, 0.18), rgba(240, 191, 98, 0.1)),
+    rgba(255, 255, 255, 0.05);
+}
+
+.share-modal__hint {
+  min-height: 1.2em;
+  margin: 10px 0 0;
+  text-align: center;
+  color: rgba(168, 162, 190, 0.92);
+  font-size: 0.82rem;
+}
+
+.result-image-button:disabled {
+  opacity: 0.72;
+  cursor: wait;
 }
 
 .result-identity {
@@ -1158,6 +1276,31 @@ h1 {
   filter: brightness(1.06);
 }
 
+.result-tree-link {
+  display: block;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin: 18px auto 0;
+  color: rgba(198, 188, 166, 0.72);
+  font-family: var(--result-serif);
+  font-size: clamp(0.76rem, 2.8vw, 0.86rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-align: center;
+  text-decoration: none;
+  text-underline-offset: 0.24em;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.result-tree-link:hover,
+.result-tree-link:focus-visible {
+  color: rgba(240, 191, 98, 0.88);
+  text-decoration: underline;
+  text-decoration-color: rgba(240, 191, 98, 0.34);
+  transform: translateY(-1px);
+}
+
 .summon-stage {
   display: grid;
   min-height: calc(100vh - 88px);
@@ -1669,17 +1812,6 @@ h1 {
   height: 42px;
 }
 
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.35;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.8);
-  }
-}
-
 @keyframes drift {
   to {
     transform: translate3d(28px, -18px, 0) scale(1.08);
@@ -1858,5 +1990,479 @@ h1 {
   .result-cta > span {
     padding: 0 18px;
     font-size: 0.78rem;
+  }
+}
+
+.tree-shell {
+  max-width: 1220px;
+}
+
+.tree-header .lead {
+  width: min(700px, calc(100vw - 32px));
+  word-break: normal;
+}
+
+.tree-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.tree-board {
+  position: relative;
+  overflow: hidden;
+  min-height: 660px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(240, 191, 98, 0.1), transparent 17rem),
+    radial-gradient(circle at 18% 18%, rgba(98, 215, 196, 0.1), transparent 18rem),
+    rgba(17, 16, 38, 0.78);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.tree-board-top {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 24px 0;
+}
+
+.tree-board-top h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.65rem, 3.6vw, 2.55rem);
+  line-height: 1.12;
+}
+
+.tree-total {
+  display: grid;
+  min-width: 132px;
+  gap: 4px;
+  border: 1px solid rgba(240, 191, 98, 0.28);
+  border-radius: 18px;
+  padding: 12px 14px;
+  background: rgba(240, 191, 98, 0.08);
+  text-align: right;
+}
+
+.tree-total span,
+.tree-stage-box span,
+.tree-leaf-note {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.tree-total strong {
+  color: #ffe0a1;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.tree-visual {
+  position: absolute;
+  inset: 54px 0 0;
+  min-height: 610px;
+}
+
+.tree-trunk-layers,
+.tree-svg {
+  position: absolute;
+  inset: 0;
+}
+
+.tree-trunk-layers {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tree-art-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform-origin: center bottom;
+  background-image: var(--tree-base-image);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.36));
+}
+
+.tree-art-layer.is-active {
+  opacity: 1;
+}
+
+.tree-art-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+}
+
+.tree-art-base {
+  display: none;
+}
+
+.tree-branch-art {
+  opacity: 0;
+  background-image: var(--branch-image);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+  transform:
+    translate(var(--branch-x, 0px), var(--branch-y, 0px))
+    scale(var(--branch-scale, 1))
+    rotate(var(--branch-rotate, 0deg));
+  transform-origin: center bottom;
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
+}
+
+.tree-branch-art.is-visible {
+  opacity: 1;
+}
+
+.tree-trunk-layer {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: var(--trunk-width);
+  height: var(--trunk-height);
+  opacity: 0;
+  transform: translate(-50%, 18px) scale(var(--trunk-scale));
+  transform-origin: center bottom;
+  transition: opacity 900ms ease, transform 900ms cubic-bezier(0.2, 0.72, 0.2, 1);
+  background: var(--trunk-image);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.36));
+}
+
+.tree-trunk-layer.is-missing-asset {
+  background:
+    radial-gradient(ellipse at 50% 78%, color-mix(in srgb, var(--trunk-light), transparent 70%), transparent 58%),
+    linear-gradient(88deg, transparent 0 32%, var(--trunk-dark) 34% 42%, var(--trunk-mid) 48% 56%, var(--trunk-dark) 62% 68%, transparent 70%),
+    radial-gradient(ellipse at 50% 100%, var(--trunk-dark) 0 16%, transparent 17%);
+}
+
+.tree-trunk-layer::before,
+.tree-trunk-layer::after {
+  display: none;
+}
+
+.tree-trunk-layer.is-active {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(var(--trunk-scale));
+}
+
+.tree-svg {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tree-branch-layer {
+  display: none;
+}
+
+.tree-branch-shadow,
+.tree-branch {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.tree-branch-shadow {
+  stroke: rgba(0, 0, 0, 0.32);
+  stroke-width: 24;
+}
+
+.tree-branch {
+  stroke: url("#branch-gradient");
+  stroke-width: 13;
+  stroke-dasharray: 540;
+  stroke-dashoffset: 540;
+  filter: url("#tree-soft-glow");
+  animation: branchGrow 1100ms cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
+}
+
+.tree-growth-layer {
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.18));
+}
+
+.tree-leaf {
+  opacity: 0;
+  animation: leafFadeIn 520ms cubic-bezier(0.2, 0.72, 0.2, 1) var(--leaf-delay) forwards;
+}
+
+.tree-leaf-arrive,
+.tree-leaf-sway {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.tree-leaf-arrive {
+  transform: scale(0.2);
+  animation: leafArrive 520ms cubic-bezier(0.2, 0.72, 0.2, 1) var(--leaf-delay) forwards;
+}
+
+.tree-leaf-sway {
+  animation:
+    leafSway var(--leaf-sway) ease-in-out calc(var(--leaf-delay) + 520ms) infinite alternate;
+}
+
+.tree-leaf ellipse {
+  opacity: 0.9;
+}
+
+.tree-leaf image {
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tree-bud {
+  opacity: 0.68;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: budPulse 1800ms ease-in-out infinite alternate;
+}
+
+.tree-branch-label rect {
+  fill: rgba(9, 8, 23, 0.68);
+  stroke: color-mix(in srgb, var(--accent), transparent 42%);
+  stroke-width: 1;
+}
+
+.tree-branch-label text {
+  fill: #fff;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.tree-branch-name {
+  fill: color-mix(in srgb, var(--accent), white 22%);
+  font-weight: 700;
+}
+
+.tree-branch-score {
+  fill: #ded9f1;
+  font-size: 0.92rem;
+}
+
+.tree-stage-box {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tree-stage-box strong {
+  color: #fff;
+}
+
+.tree-leaf-note {
+  display: block;
+  margin-top: 6px;
+}
+
+.tree-quick-tests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.tree-quick-tests a {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #ded9f1;
+  font-size: 0.83rem;
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.tree-quick-tests a:hover {
+  border-color: rgba(240, 191, 98, 0.5);
+  transform: translateY(-1px);
+}
+
+.tree-debug {
+  margin-top: 22px;
+}
+
+.tree-debug-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tree-debug-grid label {
+  display: grid;
+  gap: 8px;
+  color: #ded9f1;
+  font-size: 0.9rem;
+}
+
+.tree-debug-grid input,
+.tree-debug-grid select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.tree-debug-divider {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 8px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tree-debug-grid button,
+.tree-debug-grid pre {
+  grid-column: span 1;
+  min-height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.tree-debug-grid button {
+  padding: 10px 14px;
+  font-weight: 700;
+}
+
+.tree-debug-grid pre {
+  grid-column: 1 / -1;
+  max-height: 240px;
+  margin: 0;
+  overflow: auto;
+  padding: 14px;
+  white-space: pre-wrap;
+}
+
+.tree-branch-art.is-align-target {
+  opacity: 1 !important;
+  filter:
+    drop-shadow(0 0 1px #ff3355)
+    drop-shadow(0 0 4px #ff3355);
+}
+
+@keyframes branchGrow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes leafArrive {
+  from {
+    transform: scale(0.2) rotate(-8deg);
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes leafFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes leafSway {
+  from {
+    transform: rotate(-2.4deg) translateY(0);
+  }
+  to {
+    transform: rotate(2.4deg) translateY(-1px);
+  }
+}
+
+@keyframes budPulse {
+  from {
+    opacity: 0.46;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 0.78;
+    transform: scale(1.06);
+  }
+}
+
+@media (max-width: 960px) {
+  .tree-grid,
+  .tree-debug-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-board {
+    min-height: 620px;
+  }
+
+  .tree-visual {
+    top: 72px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tree-board {
+    min-height: 650px;
+  }
+
+  .tree-board-top {
+    flex-direction: column;
+    padding: 18px 18px 0;
+  }
+
+  .tree-total {
+    width: 100%;
+    text-align: left;
+  }
+
+  .tree-visual {
+    inset: 128px 0 0;
+  }
+
+  .tree-trunk-layer {
+    inset: auto;
+    left: 50%;
+    bottom: 2%;
+    width: var(--trunk-width);
+    height: var(--trunk-height);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-branch,
+  .tree-leaf,
+  .tree-bud {
+    animation: none;
+  }
+
+  .tree-branch {
+    stroke-dashoffset: 0;
+  }
+
+  .tree-leaf {
+    opacity: 1;
   }
 }

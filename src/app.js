@@ -1,4 +1,5 @@
 import { EVENT_TYPES, reportEvent } from "./api/report.js";
+import { buildShareLink, buildSharePayload, initShareCard } from "./shareCard.js";
 
 const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
 
@@ -47,11 +48,14 @@ const elements = {
   communityLinkText: document.querySelector("#community-link-text"),
   restartButton: document.querySelector("#restart-button"),
   shareButton: document.querySelector("#share-button"),
-  resultStats: document.querySelector(".result-stats")
+  resultStats: document.querySelector(".result-stats"),
+  resultBottom: document.querySelector("#result-bottom")
 };
 
 const STAT_FONT_MAX = 12;
 const STAT_FONT_MIN = 9;
+
+let openShareModal = null;
 
 init();
 
@@ -65,6 +69,14 @@ async function init() {
   state.questions = questions;
   resetScores();
   bindEvents();
+  openShareModal = initShareCard({
+    onShareSave: () => {
+      reportEvent(EVENT_TYPES.RESULT_SHARE_SAVED, getSharePayload());
+    },
+    onShareCopyLink: () => {
+      reportEvent(EVENT_TYPES.RESULT_SHARE_LINK_COPIED, getSharePayload());
+    }
+  });
   window.addEventListener("resize", scheduleFitResultStats);
   reportEvent(EVENT_TYPES.H5_ENTER, { page: "h5-1" });
   maybeRenderDemo();
@@ -124,8 +136,8 @@ async function fetchJson(path) {
 
 function bindEvents() {
   elements.startButton.addEventListener("click", startTest);
-  elements.restartButton.addEventListener("click", restartTest);
-  elements.shareButton.addEventListener("click", shareResult);
+  elements.restartButton?.addEventListener("click", restartTest);
+  elements.shareButton?.addEventListener("click", shareResult);
   elements.identityCard.addEventListener("click", flipCard);
   elements.communityLink.addEventListener("click", () => {
     const result = state.latestResult || buildResult();
@@ -187,6 +199,7 @@ function maybeRenderDemo() {
 function resetResultPresentation() {
   elements.resultArchive.classList.remove("is-visible");
   elements.resultDetails.classList.remove("is-details-visible");
+  elements.resultBottom?.classList.remove("is-details-visible");
   elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
 }
 
@@ -304,6 +317,7 @@ function renderResult(result) {
 
   elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
   elements.resultDetails.classList.remove("is-details-visible");
+  elements.resultBottom?.classList.remove("is-details-visible");
   elements.identityCard.style.setProperty("--accent", primary.color);
   elements.identityCard.style.setProperty("--accent-soft", primary.softColor);
   elements.resultCrest.textContent = primary.crest;
@@ -355,11 +369,12 @@ function flipCard() {
   window.setTimeout(() => {
     elements.identityCard.classList.remove("is-shaking");
     elements.identityCard.classList.add("is-flipped", "is-flash");
-    elements.resultStatus.textContent = "协会低语已显现。";
+    elements.resultStatus.textContent = "协会低语已显现。你的共鸣身份正在被记录。";
     elements.cardHint.textContent = "";
 
     window.setTimeout(() => {
       elements.resultDetails.classList.add("is-details-visible");
+      elements.resultBottom?.classList.add("is-details-visible");
       scheduleFitResultStats();
     }, 560);
 
@@ -402,29 +417,35 @@ function renderDistribution(result) {
 }
 
 async function shareResult() {
-  const result = state.latestResult || buildResult();
-  const primary = state.associations[result.primary.key];
-  const text = `废墟的低语告诉我：我被记录为「${primary.personaTitle}」，灵魂属于「${primary.name}」。`;
-
-  reportEvent(EVENT_TYPES.RESULT_SHARED, {
-    primaryAssociation: result.primary.key,
-    secondaryAssociation: result.secondary?.key || null
-  });
-
-  if (navigator.share) {
-    await navigator.share({
-      title: "共鸣者协会身份卡",
-      text,
-      url: window.location.href
-    });
+  if (!openShareModal) {
+    console.warn("[share] modal handler unavailable");
     return;
   }
 
-  await navigator.clipboard?.writeText(`${text} ${window.location.href}`);
-  elements.shareButton.setAttribute("aria-label", "已复制分享文案");
-  window.setTimeout(() => {
+  const result = state.latestResult || buildResult();
+  const shareLink = buildShareLink(result.primary.key);
+  const sharePayload = buildSharePayload(result, state.associations, SPECTRUM_ORDER);
+
+  reportEvent(EVENT_TYPES.RESULT_SHARED, getSharePayload(result));
+
+  elements.shareButton.disabled = true;
+  elements.shareButton.setAttribute("aria-busy", "true");
+  elements.shareButton.setAttribute("aria-label", "正在生成分享图");
+
+  try {
+    await openShareModal(sharePayload, shareLink);
+  } finally {
+    elements.shareButton.disabled = false;
+    elements.shareButton.removeAttribute("aria-busy");
     elements.shareButton.setAttribute("aria-label", "分享共鸣身份");
-  }, 1800);
+  }
+}
+
+function getSharePayload(result = state.latestResult || buildResult()) {
+  return {
+    primaryAssociation: result.primary.key,
+    secondaryAssociation: result.secondary?.key || null
+  };
 }
 
 function romanize(number) {

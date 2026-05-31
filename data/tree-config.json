@@ -1,0 +1,95 @@
+{
+  "stageStorageKey": "guanghe_tree_highest_stage",
+  "branchDensityThresholds": {
+    "medium": 180,
+    "lush": 520
+  },
+  "stages": [
+    {
+      "id": "stage1",
+      "name": "小树干",
+      "minScore": 0,
+      "asset": "assets/tree/resonance-art/stage1/base-sparse.png",
+      "colors": ["#4d321f", "#8a6541", "#e3ba75"]
+    },
+    {
+      "id": "stage2",
+      "name": "中树干",
+      "minScore": 800,
+      "asset": "assets/tree/resonance-art/stage2/base-sparse.png",
+      "colors": ["#593622", "#a97d46", "#f0bf62"]
+    },
+    {
+      "id": "stage3",
+      "name": "大树干",
+      "minScore": 2200,
+      "asset": "assets/tree/resonance-art/stage3/base-sparse.png",
+      "colors": ["#684025", "#c4924d", "#ffe4a8"]
+    }
+  ],
+  "compositeAssets": {
+    "stage1": {
+      "base": "assets/tree/resonance-art/stage1/base-sparse.png",
+      "branches": {
+        "logic": {
+          "medium": "assets/tree/resonance-art/stage1/logic-medium.png",
+          "lush": "assets/tree/resonance-art/stage1/logic-lush.png"
+        },
+        "sense": {
+          "medium": "assets/tree/resonance-art/stage1/sense-medium.png",
+          "lush": "assets/tree/resonance-art/stage1/sense-lush.png"
+        },
+        "soul": {
+          "medium": "assets/tree/resonance-art/stage1/soul-medium.png",
+          "lush": "assets/tree/resonance-art/stage1/soul-lush.png"
+        },
+        "rules": {
+          "medium": "assets/tree/resonance-art/stage1/rules-medium.png",
+          "lush": "assets/tree/resonance-art/stage1/rules-lush.png"
+        }
+      }
+    },
+    "stage2": {
+      "base": "assets/tree/resonance-art/stage2/base-sparse.png",
+      "branches": {
+        "logic": {
+          "medium": "assets/tree/resonance-art/stage2/logic-medium.png",
+          "lush": "assets/tree/resonance-art/stage2/logic-lush.png"
+        },
+        "sense": {
+          "medium": "assets/tree/resonance-art/stage2/sense-medium.png",
+          "lush": "assets/tree/resonance-art/stage2/sense-lush.png"
+        },
+        "soul": {
+          "medium": "assets/tree/resonance-art/stage2/soul-medium.png",
+          "lush": "assets/tree/resonance-art/stage2/soul-lush.png"
+        },
+        "rules": {
+          "medium": "assets/tree/resonance-art/stage2/rules-medium.png",
+          "lush": "assets/tree/resonance-art/stage2/rules-lush.png"
+        }
+      }
+    },
+    "stage3": {
+      "base": "assets/tree/resonance-art/stage3/base-sparse.png",
+      "branches": {
+        "logic": {
+          "medium": "assets/tree/resonance-art/stage3/logic-medium.png",
+          "lush": "assets/tree/resonance-art/stage3/logic-lush.png"
+        },
+        "sense": {
+          "medium": "assets/tree/resonance-art/stage3/sense-medium.png",
+          "lush": "assets/tree/resonance-art/stage3/sense-lush.png"
+        },
+        "soul": {
+          "medium": "assets/tree/resonance-art/stage3/soul-medium.png",
+          "lush": "assets/tree/resonance-art/stage3/soul-lush.png"
+        },
+        "rules": {
+          "medium": "assets/tree/resonance-art/stage3/rules-medium.png",
+          "lush": "assets/tree/resonance-art/stage3/rules-lush.png"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>共鸣生长树 | 游戏创造者议会</title>
+    <meta name="description" content="四分支共鸣树可视化与快速测试页面。">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="tree">
+    <div class="ambient" aria-hidden="true">
+      <span class="mist mist-a"></span>
+      <span class="mist mist-b"></span>
+    </div>
+
+    <main class="shell world-shell tree-shell">
+      <header class="world-header tree-header">
+        <div>
+          <p class="eyebrow">游戏创造者议会 · 共鸣之树</p>
+          <h1>共鸣生长树</h1>
+          <p class="lead">四个协会分支以浏览、点赞、评论与发帖汇聚积分。树干随总共鸣值成长，枝桠按各协会贡献呈现稀疏、适中、茂密三种状态。</p>
+        </div>
+        <a class="ghost-link" href="world.html">返回世界复原图</a>
+      </header>
+
+      <section class="tree-grid" aria-label="四分支共鸣树">
+        <section class="tree-board" aria-labelledby="tree-title">
+          <div class="tree-board-top">
+            <div>
+              <p class="eyebrow" id="tree-preset-label">动态数据</p>
+              <h2 id="tree-title">四分支共鸣树</h2>
+            </div>
+            <div class="tree-total">
+              <span>总共鸣值</span>
+              <strong id="tree-total-score">0</strong>
+            </div>
+          </div>
+
+          <div class="tree-visual">
+            <div class="tree-trunk-layers" id="tree-trunk-layers" aria-hidden="true"></div>
+            <svg
+              class="tree-svg"
+              id="tree-svg"
+              viewBox="0 0 920 660"
+              role="img"
+              aria-labelledby="tree-svg-title tree-svg-desc"
+            >
+              <title id="tree-svg-title">四分支共鸣树</title>
+              <desc id="tree-svg-desc">每个枝桠代表一个协会，枝桠疏密由该协会积分决定。</desc>
+            </svg>
+          </div>
+        </section>
+
+        <aside class="world-stats tree-stats">
+          <p class="eyebrow">最近更新</p>
+          <p class="update-text" id="tree-updated-at">读取共鸣数据中</p>
+          <div class="formula-box">
+            <strong>积分公式</strong>
+            <span>浏览 x1 + 点赞 x3 + 评论 x5 + 发帖 x10</span>
+          </div>
+          <div class="tree-stage-box">
+            <span>当前树干形态</span>
+            <strong id="tree-stage-name">小树干</strong>
+          </div>
+          <div class="resonance-bars" id="tree-resonance-bars"></div>
+          <div class="tree-quick-tests" aria-label="快速测试入口">
+            <a href="tree.html?preset=empty">empty</a>
+            <a href="tree.html?preset=low">low</a>
+            <a href="tree.html?preset=mid">mid</a>
+            <a href="tree.html?preset=high">high</a>
+            <a href="tree.html?preset=stage1">stage1</a>
+            <a href="tree.html?preset=stage2">stage2</a>
+            <a href="tree.html?preset=stage3">stage3</a>
+            <a href="tree.html?preset=stage2&amp;debug=1">debug</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="tree-debug board-card" id="tree-debug-panel" hidden>
+        <div class="section-heading">
+          <p class="eyebrow">调试面板</p>
+          <h2>快速调整分数、阈值与枝桠位置</h2>
+        </div>
+        <div class="tree-debug-grid" id="tree-debug-grid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="src/tree.js"></script>
+  </body>
+</html>

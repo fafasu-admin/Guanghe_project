@@ -6,6 +6,8 @@ export const EVENT_TYPES = Object.freeze({
   QUESTION_ANSWERED: "question_answered",
   TEST_COMPLETED: "test_completed",
   RESULT_SHARED: "result_shared",
+  RESULT_SHARE_SAVED: "result_share_saved",
+  RESULT_SHARE_LINK_COPIED: "result_share_link_copied",
   COMMUNITY_CTA_CLICKED: "community_cta_clicked"
 });
 

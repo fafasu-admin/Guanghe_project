@@ -1,0 +1,30 @@
+{
+  "updatedAt": "2026-05-23 22:00",
+  "achievedTrunkStage": null,
+  "associations": {
+    "logic": {
+      "views": 420,
+      "likes": 62,
+      "comments": 18,
+      "posts": 3
+    },
+    "sense": {
+      "views": 520,
+      "likes": 78,
+      "comments": 22,
+      "posts": 4
+    },
+    "soul": {
+      "views": 610,
+      "likes": 94,
+      "comments": 26,
+      "posts": 5
+    },
+    "rules": {
+      "views": 450,
+      "likes": 69,
+      "comments": 20,
+      "posts": 4
+    }
+  }
+}
