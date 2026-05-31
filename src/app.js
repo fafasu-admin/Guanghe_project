@@ -200,7 +200,7 @@ function resetResultPresentation() {
   elements.resultArchive.classList.remove("is-visible");
   elements.resultDetails.classList.remove("is-details-visible");
   elements.resultBottom?.classList.remove("is-details-visible");
-  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
+  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash", "is-flip-done");
 }
 
 function showView(name) {
@@ -315,7 +315,7 @@ function renderResult(result) {
   document.documentElement.style.setProperty("--accent", primary.color);
   document.documentElement.style.setProperty("--accent-soft", primary.softColor);
 
-  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash");
+  elements.identityCard.classList.remove("is-summoned", "is-shaking", "is-flipped", "is-flash", "is-flip-done");
   elements.resultDetails.classList.remove("is-details-visible");
   elements.resultBottom?.classList.remove("is-details-visible");
   elements.identityCard.style.setProperty("--accent", primary.color);
@@ -363,6 +363,7 @@ function flipCard() {
     return;
   }
 
+  elements.identityCard.classList.remove("is-flip-done");
   elements.identityCard.classList.add("is-shaking");
   elements.cardHint.textContent = "卡牌正在回应你的共鸣。";
 
@@ -371,6 +372,33 @@ function flipCard() {
     elements.identityCard.classList.add("is-flipped", "is-flash");
     elements.resultStatus.textContent = "协会低语已显现。你的共鸣身份正在被记录。";
     elements.cardHint.textContent = "";
+
+    const inner = elements.identityCard.querySelector(".card-inner");
+    let flipDone = false;
+
+    const markFlipDone = () => {
+      if (flipDone) {
+        return;
+      }
+
+      flipDone = true;
+      elements.identityCard.classList.add("is-flip-done");
+    };
+
+    if (inner) {
+      inner.addEventListener(
+        "transitionend",
+        (event) => {
+          if (event.propertyName === "transform" || event.propertyName === "-webkit-transform") {
+            markFlipDone();
+          }
+        },
+        { once: true }
+      );
+    }
+
+    /* iOS Safari 偶发不触发 transitionend，所以加一个时间兜底 */
+    window.setTimeout(markFlipDone, 860);
 
     window.setTimeout(() => {
       elements.resultDetails.classList.add("is-details-visible");
