@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>共鸣生长树 | 游戏创造者议会</title>
+    <meta name="description" content="查看四协会共鸣汇聚而成的共鸣生长树。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="tree-view">
+    <div class="ambient" aria-hidden="true">
+      <span class="moon"></span>
+      <span class="ruin-arch"></span>
+      <span class="rune-ring"></span>
+      <span class="mist mist-a"></span>
+      <span class="mist mist-b"></span>
+    </div>
+
+    <main class="shell">
+      <section class="tree-view-archive result-archive" id="tree-view-archive" aria-labelledby="tree-view-title">
+        <header class="result-archive-header">
+          <p class="result-archive-kicker">
+            <span class="result-section-mark" aria-hidden="true"><span></span></span>
+            <span class="result-archive-kicker__text">共鸣之树 | 游戏创造者议会</span>
+            <span class="result-section-mark" aria-hidden="true"><span></span></span>
+          </p>
+          <p class="result-status" id="tree-view-status">四座协会以各自的微光，共同点亮这棵共鸣之树。</p>
+        </header>
+
+        <div class="tree-view-stage">
+          <section class="tree-view-board" aria-labelledby="tree-view-title">
+            <div class="tree-view-board-head">
+              <h2 class="tree-view-title" id="tree-view-title">共鸣生长树</h2>
+              <div class="tree-view-total">
+                <span>总共鸣值</span>
+                <strong id="tree-total-score">0</strong>
+              </div>
+            </div>
+
+            <div class="tree-visual tree-view-visual">
+              <div class="tree-trunk-layers" id="tree-trunk-layers" aria-hidden="true"></div>
+              <svg
+                class="tree-svg"
+                id="tree-svg"
+                viewBox="0 0 920 660"
+                role="img"
+                aria-labelledby="tree-svg-title tree-svg-desc"
+              >
+                <title id="tree-svg-title">四分支共鸣树</title>
+                <desc id="tree-svg-desc">每个枝桠代表一个协会，枝桠疏密由该协会共鸣值决定。</desc>
+              </svg>
+            </div>
+          </section>
+        </div>
+
+        <div class="tree-view-details">
+          <p class="tree-view-updated" id="tree-updated-at">读取共鸣数据中</p>
+
+          <div class="tree-view-stage-box">
+            <span>当前树干形态</span>
+            <strong id="tree-stage-name">小树干</strong>
+          </div>
+
+          <section class="result-spectrum" aria-labelledby="tree-resonance-title">
+            <h3 class="result-spectrum-title" id="tree-resonance-title">各协会共鸣值</h3>
+            <div class="spectrum-list" id="tree-resonance-bars"></div>
+            <p class="result-spectrum-note">枝桠疏密反映各协会当前的共鸣汇聚程度。</p>
+          </section>
+
+          <nav class="tree-view-presets" aria-label="演示状态切换">
+            <a href="tree-view.html?preset=empty">empty</a>
+            <a href="tree-view.html?preset=low">low</a>
+            <a href="tree-view.html?preset=mid">mid</a>
+            <a href="tree-view.html?preset=high">high</a>
+            <a href="tree-view.html?preset=stage1">stage1</a>
+            <a href="tree-view.html?preset=stage2">stage2</a>
+            <a href="tree-view.html?preset=stage3">stage3</a>
+          </nav>
+        </div>
+
+        <a class="result-tree-link" href="index.html">返回共鸣者档案</a>
+      </section>
+    </main>
+
+    <script type="module" src="src/treeView.js"></script>
+  </body>
+</html>

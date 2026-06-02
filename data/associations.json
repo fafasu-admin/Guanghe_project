@@ -19,7 +19,7 @@
     "spectrumIcon": "assets/cards/逻辑构序.png",
     "declaration": "你相信万物皆有深层结构。纷乱系统终将被梳理，代码和规则是世界稳定运转的骨架。",
     "portrait": "硬核攻略、配置研究、机制挖掘、数据分析，「为什么能跑」型玩家。",
-    "communityUrl": "world.html"
+    "communityUrl": "https://guanghe.qq.com"
   },
   "sense": {
     "name": "感官铸型协会",
@@ -41,7 +41,7 @@
     "spectrumIcon": "assets/cards/感官铸形.png",
     "declaration": "你听见色彩流动，也看见声波成形。世界首先要被看见、被听见，然后才会被记住。",
     "portrait": "同人创作、截图鉴赏、视觉分享、美学追求，「太美了」型玩家。",
-    "communityUrl": "world.html"
+    "communityUrl": "https://guanghe.qq.com"
   },
   "soul": {
     "name": "灵魂编织协会",
@@ -63,7 +63,7 @@
     "spectrumIcon": "assets/cards/灵魂编织.png",
     "declaration": "你会被故事和人物牵挂。比起效率，你更在意一个人是否被完整地懂得、被温柔地记住。",
     "portrait": "剧情考据、角色关系、世界观解读、台词收藏，「为什么会感动」型玩家。",
-    "communityUrl": "world.html"
+    "communityUrl": "https://guanghe.qq.com"
   },
   "rules": {
     "name": "规则制定协会",
@@ -85,6 +85,6 @@
     "spectrumIcon": "assets/cards/规则制定.png",
     "declaration": "你凝视博弈方桌上的每一枚筹码。规则刻痕尚未磨灭，机制即法则。",
     "portrait": "机制测评、平衡讨论、关卡设计、系统理解，「为什么不这样」型玩家。",
-    "communityUrl": "world.html"
+    "communityUrl": "https://guanghe.qq.com"
   }
 }
