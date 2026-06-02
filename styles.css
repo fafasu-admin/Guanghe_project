@@ -2588,14 +2588,26 @@ body[data-page="tree-view"] .shell {
 }
 
 .tree-view-visual {
+  --tree-view-reference-size: 610px;
+  --tree-view-scale: 1;
   position: relative;
-  min-height: min(68vw, 380px);
+  height: min(68vw, 360px);
+  min-height: 320px;
   margin-top: 8px;
 }
 
 .tree-view-visual.tree-visual {
   position: relative;
   inset: auto;
+}
+
+body[data-page="tree-view"] .tree-view-visual .tree-trunk-layers,
+body[data-page="tree-view"] .tree-view-visual .tree-svg {
+  inset: auto auto 0 50%;
+  width: var(--tree-view-reference-size);
+  height: var(--tree-view-reference-size);
+  transform: translateX(-50%) scale(var(--tree-view-scale));
+  transform-origin: center bottom;
 }
 
 .tree-view-details {
@@ -2689,6 +2701,11 @@ body[data-page="tree-view"] .shell {
     max-width: 460px;
   }
 
+  .tree-view-visual {
+    height: min(70vw, 300px);
+    min-height: 280px;
+  }
+
   .tree-view-board-head {
     flex-direction: column;
     padding: 16px 16px 0;
@@ -2699,7 +2716,4 @@ body[data-page="tree-view"] .shell {
     text-align: left;
   }
 
-  .tree-view-visual {
-    min-height: 320px;
-  }
 }

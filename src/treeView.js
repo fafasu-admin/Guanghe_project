@@ -8,12 +8,16 @@ import {
 const elements = {
   svg: document.querySelector("#tree-svg"),
   trunkLayers: document.querySelector("#tree-trunk-layers"),
+  visual: document.querySelector(".tree-view-visual"),
   updatedAt: document.querySelector("#tree-updated-at"),
   stageName: document.querySelector("#tree-stage-name"),
   totalScore: document.querySelector("#tree-total-score"),
   resonanceBars: document.querySelector("#tree-resonance-bars"),
   archive: document.querySelector("#tree-view-archive")
 };
+
+const TREE_VIEW_REFERENCE_SIZE = 610;
+let resizeFrame = 0;
 
 const engine = createTreeEngine({
   elements,
@@ -33,11 +37,35 @@ async function init() {
     debugMode: false
   });
 
+  syncTreeViewScale();
+  window.addEventListener("resize", scheduleTreeViewScaleSync);
+
   reportEvent(EVENT_TYPES.H5_ENTER, { page: "h5-tree" });
 
   window.requestAnimationFrame(() => {
     elements.archive?.classList.add("is-visible");
   });
+}
+
+function scheduleTreeViewScaleSync() {
+  if (resizeFrame) return;
+
+  resizeFrame = window.requestAnimationFrame(() => {
+    resizeFrame = 0;
+    syncTreeViewScale();
+  });
+}
+
+function syncTreeViewScale() {
+  if (!elements.visual) return;
+
+  const visualHeight = elements.visual.getBoundingClientRect().height;
+  if (!visualHeight) return;
+
+  elements.visual.style.setProperty(
+    "--tree-view-scale",
+    String(visualHeight / TREE_VIEW_REFERENCE_SIZE)
+  );
 }
 
 function renderUserBars(state, targetElements) {

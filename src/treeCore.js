@@ -47,7 +47,7 @@ export const BRANCH_LAYER_ADJUSTMENTS = {
     sense_medium: { x: 0, y: 0, scale: 1, rotate: 0 },
     sense_lush: { x: 0, y: 0, scale: 1, rotate: 0 },
     soul_medium: { x: -24, y: -25, scale: 1, rotate: 0 },
-    soul_lush: { x: 0, y: 0, scale: 1, rotate: 0 },
+    soul_lush: { x: -14, y: -27, scale: 1, rotate: 0 },
     rules_medium: { x: 23, y: -14, scale: 1, rotate: 0 },
     rules_lush: { x: 24, y: 15, scale: 1.15, rotate: 0 }
   }
