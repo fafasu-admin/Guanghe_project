@@ -10,11 +10,7 @@
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-如果系统没有 `python` 命令，也可以使用 Codex 内置 Python：
-
-```powershell
-& 'C:\Users\em-_t\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m http.server 4173 --bind 127.0.0.1
-```
+如果系统没有 `python` 命令，请先安装 Python 3，或将 Python 加入系统 PATH 后再执行上面的命令。
 
 本机访问：
 
@@ -25,7 +21,7 @@ python -m http.server 4173 --bind 127.0.0.1
 手机局域网测试时，需要把服务绑定到 `0.0.0.0`，并用电脑的局域网 IP 访问：
 
 ```powershell
-& 'C:\Users\em-_t\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m http.server 4174 --bind 0.0.0.0
+python -m http.server 4174 --bind 0.0.0.0
 ```
 
 示例地址：
