@@ -2,6 +2,7 @@ import { EVENT_TYPES, reportEvent } from "./api/report.js";
 import { buildShareLink, buildSharePayload, initShareCard } from "./shareCard.js";
 
 const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
+const RESULT_STORAGE_KEY = "guanghe-resonance-result";
 
 const state = {
   associations: {},
@@ -80,6 +81,7 @@ async function init() {
   window.addEventListener("resize", scheduleFitResultStats);
   reportEvent(EVENT_TYPES.H5_ENTER, { page: "h5-1" });
   maybeRenderDemo();
+  maybeRestoreCardView();
 }
 
 function getStatShortName(association) {
@@ -153,6 +155,7 @@ function startTest() {
   state.currentIndex = 0;
   state.answers = [];
   state.latestResult = null;
+  clearPersistedResult();
   resetResultPresentation();
   reportEvent(EVENT_TYPES.TEST_START);
   showView("quiz");
@@ -170,6 +173,93 @@ function resetScores() {
   }, {});
 }
 
+function persistResult(flipped = false) {
+  try {
+    localStorage.setItem(
+      RESULT_STORAGE_KEY,
+      JSON.stringify({
+        scores: state.scores,
+        flipped
+      })
+    );
+  } catch (error) {
+    console.warn("[app] failed to persist resonance result", error);
+  }
+}
+
+function clearPersistedResult() {
+  try {
+    localStorage.removeItem(RESULT_STORAGE_KEY);
+  } catch (error) {
+    console.warn("[app] failed to clear persisted resonance result", error);
+  }
+}
+
+function loadPersistedResult() {
+  try {
+    const raw = localStorage.getItem(RESULT_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const saved = JSON.parse(raw);
+    if (!saved?.scores || typeof saved.scores !== "object") {
+      return null;
+    }
+
+    return saved;
+  } catch (error) {
+    console.warn("[app] failed to load persisted resonance result", error);
+    return null;
+  }
+}
+
+function applyScores(savedScores) {
+  Object.keys(state.scores).forEach((key) => {
+    state.scores[key] = Number(savedScores[key]) || 0;
+  });
+}
+
+function showFlippedCardInstant() {
+  elements.identityCard.classList.add("is-flipped", "is-flip-done");
+  elements.resultDetails.classList.add("is-details-visible");
+  elements.resultBottom?.classList.add("is-details-visible");
+  elements.cardHint.textContent = "";
+  elements.resultStatus.textContent = "协会低语已显现。你的共鸣身份正在被记录。";
+  scheduleFitResultStats();
+}
+
+function presentResultView(result, { flipped = false, animateSummon = true } = {}) {
+  state.latestResult = result;
+  renderResult(result);
+  showView("result");
+
+  window.requestAnimationFrame(() => {
+    elements.resultArchive.classList.add("is-visible");
+    if (animateSummon) {
+      elements.identityCard.classList.add("is-summoned");
+    }
+    if (flipped) {
+      showFlippedCardInstant();
+    }
+  });
+}
+
+function maybeRestoreCardView() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("card") !== "1" || params.get("demo")) {
+    return;
+  }
+
+  const saved = loadPersistedResult();
+  if (!saved) {
+    return;
+  }
+
+  applyScores(saved.scores);
+  presentResultView(buildResult(), { flipped: Boolean(saved.flipped), animateSummon: false });
+}
+
 function maybeRenderDemo() {
   const params = new URLSearchParams(window.location.search);
   const demoAssociation = params.get("demo");
@@ -184,16 +274,16 @@ function maybeRenderDemo() {
   });
 
   const result = buildResult();
-  state.latestResult = result;
-  renderResult(result);
-  showView("result");
-  window.requestAnimationFrame(() => {
-    elements.resultArchive.classList.add("is-visible");
-    elements.identityCard.classList.add("is-summoned");
-    if (params.get("flipped") === "1") {
-      flipCard();
-    }
+  presentResultView(result, {
+    flipped: false,
+    animateSummon: true
   });
+
+  if (params.get("flipped") === "1") {
+    window.requestAnimationFrame(() => {
+      flipCard();
+    });
+  }
 }
 
 function resetResultPresentation() {
@@ -262,6 +352,7 @@ function chooseOption(question, option) {
 function revealResult() {
   const result = buildResult();
   state.latestResult = result;
+  persistResult(false);
 
   reportEvent(EVENT_TYPES.TEST_COMPLETED, {
     primaryAssociation: result.primary.key,
@@ -403,6 +494,7 @@ function flipCard() {
     window.setTimeout(() => {
       elements.resultDetails.classList.add("is-details-visible");
       elements.resultBottom?.classList.add("is-details-visible");
+      persistResult(true);
       scheduleFitResultStats();
     }, 560);
 
