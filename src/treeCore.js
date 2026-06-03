@@ -139,7 +139,7 @@ export function createTreeEngine(options = {}) {
     const [associations, config, data] = await Promise.all([
       fetchJson("data/associations.json"),
       fetchJson("data/tree-config.json"),
-      fetchJson("data/tree-mock.json")
+      fetchTreeData()
     ]);
 
     state.associations = associations;
@@ -520,6 +520,15 @@ async function fetchJson(path) {
     throw new Error(`Failed to load ${path}`);
   }
   return response.json();
+}
+
+async function fetchTreeData() {
+  try {
+    return await fetchJson("data/tree-live.json");
+  } catch (error) {
+    console.warn("[tree data] failed to load live data, falling back to mock", error);
+    return fetchJson("data/tree-mock.json");
+  }
 }
 
 function buildScores(statsMap) {

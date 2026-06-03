@@ -57,6 +57,8 @@ http://<电脑局域网IP>:4174/tree-view.html
 │   ├── treeView.js            # tree-view.html 展示页入口与展示页缩放逻辑
 │   └── api/
 │       └── report.js          # 埋点事件封装
+├── scripts/
+│   └── fetch-guanghe-data.mjs # 光核社区数据抓取脚本，输出 data/tree-live.json
 ├── assets/
 │   ├── cards/                 # 结果卡、按钮、协会图标等图片资源
 │   └── tree/resonance-art/    # 共鸣树分阶段贴图资源
@@ -86,7 +88,7 @@ http://<电脑局域网IP>:4174/tree-view.html
 
 ### `tree-view.html`
 
-面向用户的共鸣树展示页。默认读取 `data/tree-mock.json` 作为演示数据，计算总共鸣值、当前树干阶段，以及四个协会分支的疏密状态。
+面向用户的共鸣树展示页。页面会优先读取 `data/tree-live.json`，读取失败时回退到 `data/tree-mock.json` 作为演示数据，计算总共鸣值、当前树干阶段，以及四个协会分支的疏密状态。
 
 当前默认 mock 数据会得到：
 
@@ -128,6 +130,80 @@ views * 1 + likes * 3 + comments * 5 + posts * 10
 - `stage2`: 800
 - `stage3`: 2200
 
+## 光核数据爬虫
+
+`scripts/fetch-guanghe-data.mjs` 用于从光核社区接口抓取四个目标子板块数据，并生成前端可直接消费的 `data/tree-live.json`。
+
+目标板块：
+
+- `soul`: 137，灵魂编织协会
+- `sense`: 138，感官铸型协会
+- `logic`: 139，逻辑构序协会
+- `rules`: 140，规则制定协会
+
+运行前先复制 `.env.example` 为 `.env`，并在服务器环境变量或本地 shell 中配置：
+
+```text
+GUANGHE_COOKIE=从浏览器 Fetch/XHR 请求里复制的完整 Cookie
+GUANGHE_REFERER=https://guanghe.qq.com/
+GUANGHE_ORIGIN=https://guanghe.qq.com
+GUANGHE_INTERVAL_MS=60000
+GUANGHE_OUTPUT=data/tree-live.json
+GUANGHE_MAX_PAGES=20
+GUANGHE_WRITE_EMPTY=0
+```
+
+不要把真实 Cookie 写进代码、README、截图或 Git。`.env` 和 `data/tree-live.json` 已在 `.gitignore` 中忽略。
+
+本地单次测试：
+
+```powershell
+$env:GUANGHE_COOKIE="your-cookie"
+$env:GUANGHE_ONCE="1"
+node scripts/fetch-guanghe-data.mjs
+```
+
+如果已经把 Cookie 写入本地 `.env`，也可以只临时指定单次运行开关：
+
+```powershell
+$env:GUANGHE_ONCE="1"
+node scripts/fetch-guanghe-data.mjs
+```
+
+成功时会看到类似输出：
+
+```text
+[guanghe-crawler] 2026-06-03 11:22 wrote data/tree-live.json: {"soul":{"views":4,"likes":1,"comments":0,"posts":3},"sense":{"views":3,"likes":0,"comments":0,"posts":3},"logic":{"views":3,"likes":0,"comments":0,"posts":3},"rules":{"views":3,"likes":0,"comments":0,"posts":3}}
+```
+
+服务器持续运行：
+
+```powershell
+$env:GUANGHE_COOKIE="your-cookie"
+node scripts/fetch-guanghe-data.mjs
+```
+
+脚本默认每 1 分钟抓取一次。接口返回数据后，会聚合为：
+
+```json
+{
+  "updatedAt": "2026-06-03 12:00",
+  "achievedTrunkStage": null,
+  "associations": {
+    "logic": {
+      "views": 0,
+      "likes": 0,
+      "comments": 0,
+      "posts": 0
+    }
+  }
+}
+```
+
+默认情况下，如果四个板块都返回 0 条数据，脚本会跳过写入，避免把现有展示数据覆盖成空树。确认确实需要写入空结果时，可以设置 `GUANGHE_WRITE_EMPTY=1`。
+
+Cookie 时效通常有限，需要定期从浏览器更新。若接口返回 `401`、`403`、未登录或 `code` 非 0，优先检查 Cookie 是否过期。
+
 ## 树图贴图与坐标
 
 树图资源位于：
@@ -166,14 +242,17 @@ assets/tree/resonance-art/<stage>/
 3. 项目结构：解释根目录、数据、脚本、资源的职责。
 4. 页面说明：分别说明首页、展示页、调试页。
 5. 数据与计算：说明共鸣值、分支密度、树干阶段的来源。
-6. 树图贴图与坐标：说明资源命名、坐标配置和展示缩放基准。
-7. 开发注意事项：记录维护时容易踩坑的地方。
+6. 光核数据爬虫：说明 Cookie 配置、抓取脚本和输出 JSON。
+7. 树图贴图与坐标：说明资源命名、坐标配置和展示缩放基准。
+8. 开发注意事项：记录维护时容易踩坑的地方。
 
 ## 开发注意事项
 
 - 这是静态项目，不需要 `npm install` 或构建步骤。
 - 不建议直接双击 HTML 文件打开，ES Module 与 `fetch()` 在 `file://` 下可能受限；请使用 HTTP 静态服务。
 - 修改 `data/*.json` 后建议刷新页面并加缓存参数，例如 `?v=dev1`。
+- 实时数据由 `data/tree-live.json` 提供；本地不存在该文件时会自动回退到 `data/tree-mock.json`。
 - 修改树图坐标时，优先使用 `tree.html?preset=stage3&debug=1` 调试并复制 JSON。
 - `tree-view.html` 的展示缩放逻辑在 `src/treeView.js`，调试页 `tree.html` 不使用这套缩放逻辑。
+- 光核 Cookie 只放服务器环境变量或本地 `.env`，不要提交到 GitHub。
 - 如果手机局域网访问失败，先确认手机和电脑在同一 Wi-Fi，再检查防火墙。

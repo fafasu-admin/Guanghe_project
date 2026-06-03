@@ -3,3 +3,10 @@
 001_subject_mask.png
 001_white_background_oil_skin.png
 process_portrait_white_oil.py
+
+# Runtime secrets and generated live data
+.env
+.env.*
+!/.env.example
+data/tree-live.json
+data/tree-live.tmp.json
