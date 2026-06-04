@@ -2513,7 +2513,78 @@ body[data-page="tree-view"] .shell {
 }
 
 .tree-view-archive {
+  width: min(620px, 100%);
   padding-bottom: 24px;
+}
+
+body[data-page="tree-view"] .result-archive-header {
+  padding-bottom: 6px;
+}
+
+.tree-view-page-title {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: min(560px, 100%);
+  margin: 0 auto 14px;
+  padding: 0 72px 14px;
+  font-family: "Cinzel", "Noto Serif SC", "STKaiti", serif;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 3px 22px rgba(240, 191, 98, 0.24);
+}
+
+.tree-view-page-title::before,
+.tree-view-page-title::after {
+  position: absolute;
+  bottom: 0;
+  width: 43%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(240, 191, 98, 0.72));
+}
+
+.tree-view-page-title::before {
+  left: 0;
+}
+
+.tree-view-page-title::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.tree-view-page-title span {
+  color: rgba(240, 191, 98, 0.82);
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tree-view-page-title strong {
+  background: var(--result-gold-gradient-soft);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-family: "Noto Serif SC", "STKaiti", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.08;
+  white-space: nowrap;
+  filter: drop-shadow(0 0 12px rgba(240, 191, 98, 0.2));
+}
+
+body[data-page="tree-view"] .result-status {
+  width: max-content;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  color: rgba(214, 207, 230, 0.82);
+  font-family: "Noto Serif SC", "STKaiti", serif;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  white-space: nowrap;
 }
 
 .tree-view-stage {
@@ -2539,37 +2610,29 @@ body[data-page="tree-view"] .shell {
 .tree-view-board-head {
   position: relative;
   z-index: 3;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
+  display: block;
   padding: 18px 18px 0;
 }
 
-.tree-view-title {
-  margin: 0;
-  background: var(--result-gold-gradient-soft);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  font-family: var(--result-serif);
-  font-size: clamp(1.05rem, 4.2vw, 1.28rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  line-height: 1.3;
-  filter: drop-shadow(0 0 10px rgba(240, 191, 98, 0.28));
-}
-
 .tree-view-total {
+  position: absolute;
+  top: 18px;
+  right: 18px;
   display: grid;
-  min-width: 108px;
+  width: 112px;
+  min-width: 0;
+  min-height: 68px;
   gap: 4px;
-  border: 1px solid rgba(240, 191, 98, 0.28);
-  border-radius: 16px;
-  padding: 10px 12px;
-  background: rgba(240, 191, 98, 0.08);
-  text-align: right;
+  place-content: center;
+  place-items: center;
+  border: 1px solid rgba(240, 191, 98, 0.38);
+  border-radius: 8px;
+  padding: 11px 14px;
+  background:
+    linear-gradient(135deg, rgba(240, 191, 98, 0.13), rgba(255, 255, 255, 0.02)),
+    rgba(10, 9, 24, 0.68);
+  box-shadow: inset 0 0 20px rgba(240, 191, 98, 0.04), 0 10px 26px rgba(0, 0, 0, 0.16);
+  text-align: center;
 }
 
 .tree-view-total span {
@@ -2611,80 +2674,198 @@ body[data-page="tree-view"] .tree-view-visual .tree-svg {
 }
 
 .tree-view-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: start;
   margin-top: 18px;
 }
 
-.tree-view-updated {
-  margin: 0 0 14px;
-  color: rgba(168, 162, 190, 0.92);
-  font-family: var(--result-serif);
-  font-size: clamp(0.76rem, 2.8vw, 0.84rem);
-  letter-spacing: 0.06em;
-  line-height: 1.6;
-  text-align: center;
+.tree-view-formula {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(240, 191, 98, 0.26);
+  border-radius: 8px;
+  padding: 20px;
+  background:
+    linear-gradient(145deg, rgba(240, 191, 98, 0.14), transparent 58%),
+    rgba(25, 20, 42, 0.88);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.04),
+    0 16px 38px rgba(0, 0, 0, 0.2);
 }
 
-.tree-view-stage-box {
-  display: grid;
-  gap: 6px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(240, 191, 98, 0.2);
-  border-radius: 18px;
-  padding: 14px 16px;
-  background: rgba(240, 191, 98, 0.06);
-  text-align: center;
+.tree-view-formula::before {
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border: 1px solid rgba(240, 191, 98, 0.08);
+  content: "";
 }
 
-.tree-view-stage-box span {
-  color: rgba(168, 162, 190, 0.95);
-  font-family: var(--result-serif);
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-}
-
-.tree-view-stage-box strong {
-  color: rgba(235, 232, 246, 0.96);
-  font-family: var(--result-serif);
-  font-size: clamp(0.95rem, 3.6vw, 1.05rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-}
-
-.tree-view-branch-note {
-  display: block;
-  margin-top: 6px;
-  color: rgba(143, 136, 173, 0.92);
-  font-family: var(--result-serif);
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-}
-
-.tree-view-presets {
+.tree-view-formula-title {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #f7d895;
+  font-family: "Noto Serif SC", "STKaiti", serif;
+  font-size: 0.96rem;
+}
+
+.tree-view-formula-title span {
+  color: rgba(240, 191, 98, 0.72);
+  font-size: 0.5rem;
+}
+
+.tree-view-formula-title strong {
+  font-weight: 600;
+}
+
+.tree-view-formula-values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tree-view-formula-values span {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 8px;
-  margin-top: 20px;
+  border-top: 1px solid rgba(240, 191, 98, 0.15);
+  padding-top: 9px;
 }
 
-.tree-view-presets a {
-  border: 1px solid rgba(240, 191, 98, 0.18);
-  border-radius: 999px;
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(168, 162, 190, 0.88);
+.tree-view-formula-values small {
+  color: rgba(190, 183, 212, 0.7);
   font-family: var(--result-serif);
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  font-size: 0.76rem;
 }
 
-.tree-view-presets a:hover,
-.tree-view-presets a:focus-visible {
-  border-color: rgba(240, 191, 98, 0.42);
-  color: rgba(240, 191, 98, 0.88);
-  transform: translateY(-1px);
+.tree-view-formula-values b {
+  color: #ffe0a1;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+body[data-page="tree-view"] .result-spectrum {
+  margin-bottom: 0;
+  border: 1px solid rgba(240, 191, 98, 0.22);
+  border-radius: 8px;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, rgba(39, 31, 61, 0.76), rgba(13, 12, 30, 0.9)),
+    rgba(14, 12, 30, 0.78);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.035),
+    0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+body[data-page="tree-view"] .result-spectrum-title {
+  margin-bottom: 14px;
+}
+
+body[data-page="tree-view"] .spectrum-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body[data-page="tree-view"] .spectrum-row {
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 9px;
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 75%);
+  border-left: 3px solid color-mix(in srgb, var(--accent), white 8%);
+  border-radius: 7px;
+  padding: 11px;
+  background:
+    linear-gradient(110deg, color-mix(in srgb, var(--accent), transparent 91%), transparent 58%),
+    rgba(7, 7, 20, 0.3);
+}
+
+body[data-page="tree-view"] .spectrum-row.is-dominant {
+  border-color: rgba(240, 191, 98, 0.45);
+  border-left-color: #f0bf62;
+  box-shadow: inset 0 0 18px rgba(240, 191, 98, 0.045);
+}
+
+body[data-page="tree-view"] .spectrum-icon-wrap,
+body[data-page="tree-view"] .spectrum-row.is-dominant .spectrum-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+body[data-page="tree-view"] .spectrum-icon,
+body[data-page="tree-view"] .spectrum-row.is-dominant .spectrum-icon {
+  width: 30px;
+  height: 30px;
+}
+
+body[data-page="tree-view"] .spectrum-head {
+  align-items: start;
+  margin-bottom: 8px;
+}
+
+.tree-view-association-name,
+.tree-view-score {
+  display: grid;
+  min-width: 0;
+}
+
+.tree-view-association-name strong {
+  overflow: hidden;
+  color: color-mix(in srgb, var(--accent), white 32%);
+  font-family: "Noto Serif SC", "STKaiti", serif;
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-view-association-name small {
+  overflow: hidden;
+  margin-top: 2px;
+  color: rgba(178, 171, 202, 0.48);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.48rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-view-score {
+  flex: 0 0 auto;
+  justify-items: end;
+}
+
+.tree-view-score small {
+  color: rgba(178, 171, 202, 0.54);
+  font-size: 0.58rem;
+}
+
+body[data-page="tree-view"] .tree-view-score strong,
+body[data-page="tree-view"] .spectrum-row.is-dominant .tree-view-score strong {
+  color: #fff0c8;
+  -webkit-text-fill-color: currentColor;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+body[data-page="tree-view"] .spectrum-track,
+body[data-page="tree-view"] .spectrum-row.is-dominant .spectrum-track {
+  height: 4px;
+  overflow: hidden;
+}
+
+body[data-page="tree-view"] .spectrum-fill,
+body[data-page="tree-view"] .spectrum-fill.is-dominant {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent), white 35%));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 45%);
 }
 
 @media (max-width: 860px) {
@@ -2693,6 +2874,7 @@ body[data-page="tree-view"] .tree-view-visual .tree-svg {
     max-width: 680px;
     padding-top: 28px;
   }
+
 }
 
 @media (max-width: 520px) {
@@ -2706,14 +2888,41 @@ body[data-page="tree-view"] .tree-view-visual .tree-svg {
     min-height: 280px;
   }
 
+  .tree-view-page-title {
+    padding-right: 38px;
+    padding-left: 38px;
+  }
+
+  .tree-view-page-title span {
+    font-size: 0.68rem;
+  }
+
+  .tree-view-page-title strong {
+    font-size: 2.2rem;
+  }
+
+  body[data-page="tree-view"] .result-status {
+    font-size: 0.64rem;
+    white-space: nowrap;
+  }
+
   .tree-view-board-head {
-    flex-direction: column;
-    padding: 16px 16px 0;
+    padding: 14px 14px 0;
   }
 
   .tree-view-total {
-    width: 100%;
-    text-align: left;
+    top: 14px;
+    right: 14px;
+    width: 104px;
+    min-height: 66px;
+    text-align: center;
   }
 
+  .tree-view-formula-values {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-page="tree-view"] .spectrum-list {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,5 +1,3 @@
-.codex_image_deps/
-.codex_image_models/
 001_subject_mask.png
 001_white_background_oil_skin.png
 process_portrait_white_oil.py

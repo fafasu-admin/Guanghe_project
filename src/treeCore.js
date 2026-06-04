@@ -111,6 +111,7 @@ export function createTreeEngine(options = {}) {
   const {
     elements,
     debugMode = false,
+    svgTitle = "四分支共鸣树",
     formatUpdatedAt = (updatedAt) => `${updatedAt} · 树形页面测试数据`,
     formatPresetLabel = (name) => (name ? `快速测试：${name}` : "动态数据"),
     renderBars = defaultRenderBars
@@ -338,7 +339,7 @@ export function createTreeEngine(options = {}) {
     if (!elements.svg) return;
 
     elements.svg.innerHTML = `
-      <title id="tree-svg-title">四分支共鸣树</title>
+      <title id="tree-svg-title">${escapeHtml(svgTitle)}</title>
       <desc id="tree-svg-desc">当前树干形态为${escapeHtml(currentStage.name)}，总共鸣值为${getTotalScore()}。</desc>
     `;
   }

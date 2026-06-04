@@ -84,7 +84,9 @@ http://<电脑局域网IP>:4174/tree-view.html
 
 ### `tree-view.html`
 
-面向用户的共鸣树展示页。页面会优先读取 `data/tree-live.json`，读取失败时回退到 `data/tree-mock.json` 作为演示数据，计算总共鸣值、当前树干阶段，以及四个协会分支的疏密状态。
+面向用户的共鸣树展示页。页面标题为「游戏创造者议会 · 共鸣之树」，展示总共鸣值、共鸣计量法则、协会共鸣值与树图，不显示调试预设、更新时间、树干阶段或枝桠状态文案。
+
+页面会优先读取 `data/tree-live.json`，读取失败时回退到 `data/tree-mock.json` 作为演示数据，并根据数据计算总共鸣值、当前树干阶段，以及四个协会分支的疏密状态。
 
 当前默认 mock 数据会得到：
 
@@ -99,13 +101,15 @@ http://<电脑局域网IP>:4174/tree-view.html
 
 ### `tree.html`
 
-共鸣树测试与调试页面。常用调试地址：
+共鸣树测试与调试页面。普通访问状态隐藏最近更新时间、当前树干形态和预设快捷入口。使用 `debug=1` 后，调试面板会显示 `empty`、`low`、`mid`、`high`、`stage1`、`stage2`、`stage3` 快捷入口。
+
+常用调试地址：
 
 ```text
 tree.html?preset=stage3&debug=1
 ```
 
-`debug=1` 会显示调试面板，可调整分数、阶段阈值，以及分支贴图坐标。调试面板复制出的 JSON 对应 `src/treeCore.js` 中的 `BRANCH_LAYER_ADJUSTMENTS`。
+`debug=1` 会显示调试面板，可切换预设状态，并调整分数、阶段阈值以及分支贴图坐标。调试面板复制出的 JSON 对应 `src/treeCore.js` 中的 `BRANCH_LAYER_ADJUSTMENTS`。
 
 ## 共鸣树数据与计算
 
@@ -229,6 +233,8 @@ assets/tree/resonance-art/<stage>/
 
 展示页 `tree-view.html` 使用 `610px` 参考画布，再根据实际展示高度进行等比缩放。这样调试页复制出的坐标可以继续作为贴图基准，同时避免 PC 或手机展示时树图裁切。
 
+展示页的标题、计量法则与协会共鸣值使用独立的响应式展示样式。调整这些信息区域时，不要修改 `.tree-view-visual` 的参考画布尺寸或 `src/treeView.js` 中的缩放计算。
+
 ## README 文档结构
 
 本文档按以下结构维护：
@@ -247,6 +253,7 @@ assets/tree/resonance-art/<stage>/
 - 这是静态项目，不需要 `npm install` 或构建步骤。
 - 不建议直接双击 HTML 文件打开，ES Module 与 `fetch()` 在 `file://` 下可能受限；请使用 HTTP 静态服务。
 - 修改 `data/*.json` 后建议刷新页面并加缓存参数，例如 `?v=dev1`。
+- `tree-view.html` 为避免浏览器复用旧样式，会为 `styles.css` 和 `src/treeView.js` 添加版本参数；展示样式更新后应同步修改该参数。
 - 实时数据由 `data/tree-live.json` 提供；本地不存在该文件时会自动回退到 `data/tree-mock.json`。
 - 修改树图坐标时，优先使用 `tree.html?preset=stage3&debug=1` 调试并复制 JSON。
 - `tree-view.html` 的展示缩放逻辑在 `src/treeView.js`，调试页 `tree.html` 不使用这套缩放逻辑。

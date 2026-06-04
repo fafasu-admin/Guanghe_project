@@ -52,27 +52,11 @@
         </section>
 
         <aside class="world-stats tree-stats">
-          <p class="eyebrow">最近更新</p>
-          <p class="update-text" id="tree-updated-at">读取共鸣数据中</p>
           <div class="formula-box">
             <strong>积分公式</strong>
             <span>浏览 x1 + 点赞 x3 + 评论 x5 + 发帖 x10</span>
           </div>
-          <div class="tree-stage-box">
-            <span>当前树干形态</span>
-            <strong id="tree-stage-name">小树干</strong>
-          </div>
           <div class="resonance-bars" id="tree-resonance-bars"></div>
-          <div class="tree-quick-tests" aria-label="快速测试入口">
-            <a href="tree.html?preset=empty">empty</a>
-            <a href="tree.html?preset=low">low</a>
-            <a href="tree.html?preset=mid">mid</a>
-            <a href="tree.html?preset=high">high</a>
-            <a href="tree.html?preset=stage1">stage1</a>
-            <a href="tree.html?preset=stage2">stage2</a>
-            <a href="tree.html?preset=stage3">stage3</a>
-            <a href="tree.html?preset=stage2&amp;debug=1">debug</a>
-          </div>
         </aside>
       </section>
 
@@ -81,6 +65,15 @@
           <p class="eyebrow">调试面板</p>
           <h2>快速调整分数、阈值与枝桠位置</h2>
         </div>
+        <nav class="tree-quick-tests" aria-label="快速测试入口">
+          <a href="tree.html?debug=1&amp;preset=empty">empty</a>
+          <a href="tree.html?debug=1&amp;preset=low">low</a>
+          <a href="tree.html?debug=1&amp;preset=mid">mid</a>
+          <a href="tree.html?debug=1&amp;preset=high">high</a>
+          <a href="tree.html?debug=1&amp;preset=stage1">stage1</a>
+          <a href="tree.html?debug=1&amp;preset=stage2">stage2</a>
+          <a href="tree.html?debug=1&amp;preset=stage3">stage3</a>
+        </nav>
         <div class="tree-debug-grid" id="tree-debug-grid"></div>
       </section>
     </main>
