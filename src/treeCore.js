@@ -149,9 +149,11 @@ export function createTreeEngine(options = {}) {
     state.achievedTrunkStageId = data.achievedTrunkStage || null;
     state.forcedStageId = resolvePreset(state.presetName);
 
-    await preloadRuntimeAssets(config);
-    renderTrunkLayers(config.stages || []);
+    const currentStage = resolveTrunkStage(getTotalScore());
+    await preloadRuntimeAssets(config, currentStage);
+    renderTrunkLayers(getRuntimeRenderStages(config.stages || [], currentStage));
     renderAll(data.updatedAt || "调试中");
+    preloadUpcomingStageAssets(config, currentStage);
 
     return state;
   }
@@ -344,18 +346,68 @@ export function createTreeEngine(options = {}) {
     `;
   }
 
-  async function preloadRuntimeAssets(config) {
+  async function preloadRuntimeAssets(config, currentStage) {
+    if (!state.debugMode) {
+      await preloadAssetList(getStageRuntimeAssets(config, currentStage));
+      return;
+    }
+
     const trunkAssets = (config.stages || []).map((stage) => stage.asset).filter(Boolean);
     const compositeAssets = getCompositeAssets(config);
     const assets = [...new Set([...trunkAssets, ...compositeAssets])];
-    const results = await Promise.allSettled(assets.map((asset) => preloadImage(asset)));
+    await preloadAssetList(assets);
+  }
+
+  function preloadUpcomingStageAssets(config, currentStage) {
+    if (state.debugMode) return;
+
+    const nextStage = getNextStage(currentStage, config.stages || []);
+    if (!nextStage) return;
+
+    preloadAssetList(getStageRuntimeAssets(config, nextStage)).catch((error) => {
+      console.warn("[tree assets] upcoming stage preload failed", nextStage.id, error);
+    });
+  }
+
+  async function preloadAssetList(assets) {
+    const uniqueAssets = [...new Set(assets.filter(Boolean))];
+    if (!uniqueAssets.length) return;
+
+    const results = await Promise.allSettled(uniqueAssets.map((asset) => preloadImage(asset)));
 
     results.forEach((result, index) => {
       if (result.status === "rejected") {
-        state.assetFailures.add(assets[index]);
-        console.warn("[tree assets] failed to preload", assets[index], result.reason);
+        state.assetFailures.add(uniqueAssets[index]);
+        console.warn("[tree assets] failed to preload", uniqueAssets[index], result.reason);
       }
     });
+  }
+
+  function getRuntimeRenderStages(stages, currentStage) {
+    if (state.debugMode) return stages;
+    return currentStage ? [currentStage] : stages.slice(0, 1);
+  }
+
+  function getNextStage(currentStage, stages) {
+    if (!currentStage) return null;
+
+    const currentIndex = stages.findIndex((stage) => stage.id === currentStage.id);
+    if (currentIndex === -1) return null;
+
+    return stages[currentIndex + 1] || null;
+  }
+
+  function getStageRuntimeAssets(config, stage) {
+    if (!stage) return [];
+
+    const composite = config.compositeAssets?.[stage.id] || {};
+    const branchAssets = BRANCH_ORDER.map((key) => {
+      const density = getBranchDensity(state.scores[key] || 0);
+      if (density === "sparse") return null;
+      return composite.branches?.[key]?.[density] || null;
+    });
+
+    return [stage.asset, composite.base, ...branchAssets].filter(Boolean);
   }
 
   function getCompositeAssets(config) {
