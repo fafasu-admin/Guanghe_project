@@ -4,7 +4,7 @@ import { buildShareLink, buildSharePayload, initShareCard } from "./shareCard.js
 const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
 const RESULT_STORAGE_KEY = "guanghe-resonance-result";
 const COMMUNITY_LINK_URL =
-  "https://guanghe.qq.com/product/60040?from=loginpage&subTab=4&sort=hot";
+  "https://guanghe.qq.com/product/60040?from=loginpage";
 const COMMUNITY_LINK_TEXT = "进入游戏共鸣者议会找到你的同伴";
 
 const state = {
@@ -546,7 +546,7 @@ async function shareResult() {
   }
 
   const result = state.latestResult || buildResult();
-  const shareLink = buildShareLink(result.primary.key);
+  const shareLink = buildShareLink();
   const sharePayload = buildSharePayload(result, state.associations, SPECTRUM_ORDER);
 
   reportEvent(EVENT_TYPES.RESULT_SHARED, getSharePayload(result));

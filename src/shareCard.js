@@ -27,11 +27,10 @@ const copyLinkButton = document.querySelector("#share-copy-link-button");
 const closeButton = document.querySelector("#share-modal-close");
 const hint = document.querySelector("#share-modal-hint");
 
-export function buildShareLink(primaryKey) {
-  const url = new URL(window.location.href);
+export function buildShareLink() {
+  const url = new URL("index.html", window.location.href);
   url.search = "";
-  url.searchParams.set("demo", primaryKey);
-  url.searchParams.set("flipped", "1");
+  url.hash = "";
   return url.toString();
 }
 

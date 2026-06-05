@@ -775,7 +775,7 @@ body.share-modal-open {
   flex: 0 0 auto;
   width: clamp(44px, 14vw, 58px);
   height: clamp(38px, 11vw, 48px);
-  background: url("assets/cards/翅膀.png") no-repeat;
+  background: url("assets/cards/翅膀.webp") no-repeat;
   background-size: 420px 100%;
 }
 
@@ -872,7 +872,7 @@ body.share-modal-open {
   width: min(100%, 400px);
   margin: 0 auto 22px;
   padding: 14px 18px;
-  background: url("assets/cards/属性框.png") center / 100% 100% no-repeat;
+  background: url("assets/cards/属性框.webp") center / 100% 100% no-repeat;
 }
 
 .result-stat {
@@ -965,7 +965,7 @@ body.share-modal-open {
   min-width: calc(30px * var(--keyword-tag-ratio));
   padding: 0 10px;
   border: 0;
-  background: url("assets/cards/keyword-tag.png") center / 100% 100% no-repeat;
+  background: url("assets/cards/keyword-tag.webp") center / 100% 100% no-repeat;
   color: #f4e6b8;
   font-family: var(--result-serif);
   font-size: 0.82rem;
