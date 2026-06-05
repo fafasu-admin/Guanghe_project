@@ -5,7 +5,7 @@ const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
 const RESULT_STORAGE_KEY = "guanghe-resonance-result";
 const COMMUNITY_LINK_URL =
   "https://guanghe.qq.com/product/60040?from=loginpage&subTab=4&sort=hot";
-const COMMUNITY_LINK_TEXT = "进入游戏创造者议会找到你的同伴";
+const COMMUNITY_LINK_TEXT = "进入游戏共鸣者议会找到你的同伴";
 
 const state = {
   associations: {},

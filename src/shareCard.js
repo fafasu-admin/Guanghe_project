@@ -262,7 +262,7 @@ function drawBackground(ctx, height) {
 }
 
 function drawKicker(ctx, y) {
-  const text = "共鸣者档案 | 游戏创造者议会";
+  const text = "共鸣者档案 | 游戏共鸣者议会";
   ctx.textAlign = "center";
   ctx.font = '400 11px "Noto Serif SC", serif';
   ctx.fillStyle = "rgba(196, 190, 220, 0.75)";
