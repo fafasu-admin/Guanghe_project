@@ -3,6 +3,9 @@ import { buildShareLink, buildSharePayload, initShareCard } from "./shareCard.js
 
 const SPECTRUM_ORDER = ["logic", "sense", "soul", "rules"];
 const RESULT_STORAGE_KEY = "guanghe-resonance-result";
+const COMMUNITY_LINK_URL =
+  "https://guanghe.qq.com/product/60040?from=loginpage&subTab=4&sort=hot";
+const COMMUNITY_LINK_TEXT = "进入游戏创造者议会找到你的同伴";
 
 const state = {
   associations: {},
@@ -424,7 +427,7 @@ function renderResult(result) {
   elements.resultPortrait.textContent = primary.portrait;
   elements.resultPrimaryStat.textContent = `${getStatShortName(primary)} ${primaryPercent}%`;
   elements.primaryStatIcon.src = primary.spectrumIcon;
-  elements.communityLink.href = primary.communityUrl;
+  elements.communityLink.href = COMMUNITY_LINK_URL;
 
   if (potentialAssociation) {
     elements.resultSecondaryStat.textContent = `${getStatShortName(potentialAssociation)} ${result.percentages[potential.key]}%`;
@@ -435,7 +438,7 @@ function renderResult(result) {
     elements.secondaryStatIcon.hidden = true;
   }
 
-  elements.communityLinkText.textContent = `进入${primary.shortName}协会，找到你的同伴 >`;
+  elements.communityLinkText.textContent = COMMUNITY_LINK_TEXT;
 
   elements.keywordRow.innerHTML = primary.keywords
     .map((keyword) => `<span class="result-keyword">${keyword}</span>`)
