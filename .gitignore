@@ -5,6 +5,7 @@ process_portrait_white_oil.py
 # Runtime secrets and generated live data
 .env
 .env.*
+*.pem
 !/.env.example
 data/tree-live.json
 data/tree-live.tmp.json
